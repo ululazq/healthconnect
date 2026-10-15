@@ -62,8 +62,30 @@ Aplikasi mengintegrasikan lebih dari 25 platform kesehatan global:
 
 ---
 
+## 🛠️ Rebuilt Open-Source Android Application
+
+Berdasarkan hasil analisis reverse engineering terhadap Health Sync, proyek ini merekonstruksi aplikasi sinkronisasi Health Connect dalam bentuk proyek Android Native modern berbasis **Kotlin**, **Android Jetpack**, dan **Health Connect Client SDK**:
+
+- **Package**: `com.healthconnect.sync`
+- **Health Connect Client**: `androidx.health.connect:connect-client:1.1.0-alpha11`
+- **UI Architecture**: Material 3 + ViewBinding
+- **Background Engine**: Android Jetpack WorkManager (`PeriodicWorkRequest`) + Foreground Data Sync Service (`SyncForegroundService`)
+- **Permission Flow**: Rationale permission dialog handler (`androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE`) & Privacy policy alias (`ViewPermissionUsageActivity`)
+
+---
+
+## ⚡ Automated CI / GitHub Actions Compiler
+
+Aplikasi dikompilasi secara otomatis di awan melalui **GitHub Actions Workflow** (`.github/workflows/android-build.yml`):
+- Berjalan di runner `ubuntu-latest` dengan JDK 17 & Android SDK.
+- Mengompilasi proyek dengan Gradle (`gradle assembleDebug`).
+- Menghasilkan file **`app-debug.apk`** yang dapat langsung diunduh dari tab **Actions > Artifacts** di repository GitHub tanpa perlu setup Android Studio lokal!
+
+---
+
 ## 📖 Dokumentasi Lengkap
 
 - [Panduan Integrasi Health Connect](docs/HEALTH_CONNECT_INTEGRATION.md)
 - [Arsitektur Sistem & Rekayasa Balik](docs/ARCHITECTURE.md)
 - [Dekomposisi Manifes Android](analysis/AndroidManifest.xml)
+- [Workflow Kompilasi GitHub Actions](.github/workflows/android-build.yml)

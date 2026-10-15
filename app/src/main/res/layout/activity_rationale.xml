@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Why We Need Health Data Access"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="4dp"
+        android:text="HealthConnect Sync needs access to your steps, heart rate, workouts, and sleep records to synchronize your telemetry seamlessly between connected fitness ecosystems without sharing raw data with third-party advertisers.\n\nAll data is processed strictly on-device according to Android Health Connect privacy guidelines."
+        android:textSize="15sp" />
+
+</LinearLayout>
