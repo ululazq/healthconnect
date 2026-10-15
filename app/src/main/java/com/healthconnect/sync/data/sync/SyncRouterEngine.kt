@@ -17,6 +17,18 @@ class SyncRouterEngine(
     private val stravaProvider: StravaProvider
 ) {
 
+    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    private fun getSyncedIds(): MutableSet<String> {
+        return prefs.getStringSet(KEY_SYNCED_IDS, emptySet())?.toMutableSet() ?: mutableSetOf()
+    }
+
+    private fun markIdSynced(id: String) {
+        val current = getSyncedIds()
+        current.add(id)
+        prefs.edit().putStringSet(KEY_SYNCED_IDS, current).apply()
+    }
+
     suspend fun executeAllActivePairings(): List<PairingSyncResult> = withContext(Dispatchers.IO) {
         val activePairings = pairingRepository.getPairings().filter { it.isEnabled }
         val results = mutableListOf<PairingSyncResult>()
@@ -28,7 +40,7 @@ class SyncRouterEngine(
             results.add(result)
             pairingRepository.updatePairingStatus(
                 pairing.id,
-                if (result.isSuccess) "Synced: ${result.summary}" else "Failed: ${result.errorMessage}"
+                if (result.isSuccess) result.summary else "Failed: ${result.errorMessage}"
             )
         }
 
@@ -37,60 +49,95 @@ class SyncRouterEngine(
 
     private suspend fun executeSinglePairing(pairing: SyncPairing, since: Instant): PairingSyncResult {
         return try {
+            val syncedIds = getSyncedIds()
+
             when {
                 // Route 1: Huawei Health -> Strava
                 pairing.source == PlatformType.HUAWEI_HEALTH && pairing.destination == PlatformType.STRAVA -> {
                     val workouts = huaweiProvider.fetchRecentWorkouts(since)
                     if (workouts.isEmpty()) {
-                        return PairingSyncResult(pairing.id, true, "No new workouts to transfer", 0)
+                        return PairingSyncResult(pairing.id, true, "No workouts found in Huawei Health", 0)
                     }
 
-                    var uploadedCount = 0
+                    var newUploaded = 0
+                    var alreadySynced = 0
+
                     for (w in workouts) {
+                        val routeKey = "strava_${w.id}"
+                        if (syncedIds.contains(routeKey)) {
+                            alreadySynced++
+                            continue
+                        }
+
                         if (stravaProvider.isConnected) {
                             val uploadResult = stravaProvider.uploadWorkout(w)
                             if (uploadResult.isSuccess) {
-                                uploadedCount++
+                                markIdSynced(routeKey)
+                                newUploaded++
                             }
                         } else {
-                            // Demo simulation if token not yet linked
-                            uploadedCount++
+                            // Offline demo token
+                            markIdSynced(routeKey)
+                            newUploaded++
                         }
+                    }
+
+                    val summary = if (newUploaded > 0) {
+                        "$newUploaded workout(s) transferred to Strava" +
+                                if (alreadySynced > 0) " ($alreadySynced duplicate skipped)" else ""
+                    } else {
+                        "All $alreadySynced workout(s) already up to date on Strava (no duplicates)"
                     }
 
                     PairingSyncResult(
                         pairingId = pairing.id,
                         isSuccess = true,
-                        summary = "$uploadedCount workout(s) transferred from Huawei Health to Strava",
-                        recordsTransferred = uploadedCount
+                        summary = summary,
+                        recordsTransferred = newUploaded
                     )
                 }
 
                 // Route 2: Huawei Health -> Health Connect
                 pairing.source == PlatformType.HUAWEI_HEALTH && pairing.destination == PlatformType.HEALTH_CONNECT -> {
-                    var recordsCount = 0
+                    var newTransferred = 0
+                    var duplicatesSkipped = 0
 
                     if (pairing.enabledDataTypes.contains(SyncDataType.STEPS)) {
-                        val steps = huaweiProvider.fetchDailySteps(since)
-                        for (s in steps) {
-                            healthConnectRepository.insertSampleSteps(s.count)
-                            recordsCount++
+                        val stepsList = huaweiProvider.fetchDailySteps(since)
+                        for (s in stepsList) {
+                            val inserted = healthConnectRepository.insertSteps(s)
+                            if (inserted) {
+                                newTransferred++
+                            } else {
+                                duplicatesSkipped++
+                            }
                         }
                     }
 
                     if (pairing.enabledDataTypes.contains(SyncDataType.WORKOUTS)) {
                         val workouts = huaweiProvider.fetchRecentWorkouts(since)
                         for (w in workouts) {
-                            healthConnectRepository.insertSampleWorkout(w.title)
-                            recordsCount++
+                            val inserted = healthConnectRepository.insertWorkout(w)
+                            if (inserted) {
+                                newTransferred++
+                            } else {
+                                duplicatesSkipped++
+                            }
                         }
+                    }
+
+                    val summary = if (newTransferred > 0) {
+                        "$newTransferred record(s) synced into Health Connect" +
+                                if (duplicatesSkipped > 0) " ($duplicatesSkipped duplicate skipped)" else ""
+                    } else {
+                        "All records already up to date in Health Connect ($duplicatesSkipped duplicate skipped)"
                     }
 
                     PairingSyncResult(
                         pairingId = pairing.id,
                         isSuccess = true,
-                        summary = "$recordsCount record(s) synced from Huawei Health into Health Connect",
-                        recordsTransferred = recordsCount
+                        summary = summary,
+                        recordsTransferred = newTransferred
                     )
                 }
 
@@ -99,8 +146,8 @@ class SyncRouterEngine(
                     PairingSyncResult(
                         pairingId = pairing.id,
                         isSuccess = true,
-                        summary = "Health Connect exercises aligned with Strava",
-                        recordsTransferred = 1
+                        summary = "Health Connect sessions aligned with Strava",
+                        recordsTransferred = 0
                     )
                 }
 
@@ -108,7 +155,7 @@ class SyncRouterEngine(
                     PairingSyncResult(
                         pairingId = pairing.id,
                         isSuccess = true,
-                        summary = "Route ${pairing.source.displayName} to ${pairing.destination.displayName} processed",
+                        summary = "Route ${pairing.source.displayName} to ${pairing.destination.displayName} up to date",
                         recordsTransferred = 0
                     )
                 }
@@ -123,12 +170,9 @@ class SyncRouterEngine(
             )
         }
     }
-}
 
-data class PairingSyncResult(
-    val pairingId: String,
-    val isSuccess: Boolean,
-    val summary: String,
-    val recordsTransferred: Int,
-    val errorMessage: String? = null
-)
+    companion object {
+        private const val PREFS_NAME = "sync_router_prefs"
+        private const val KEY_SYNCED_IDS = "synced_record_ids"
+    }
+}

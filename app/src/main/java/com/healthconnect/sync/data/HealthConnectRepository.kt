@@ -7,6 +7,7 @@ import androidx.health.connect.client.records.ExerciseSessionRecord
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.StepsRecord
+import androidx.health.connect.client.records.metadata.Metadata
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import java.time.Instant
@@ -14,7 +15,7 @@ import java.time.temporal.ChronoUnit
 
 class HealthConnectRepository(private val context: Context) {
 
-    private val healthConnectClient: HealthConnectClient? by lazy {
+    val healthConnectClient: HealthConnectClient? by lazy {
         if (HealthConnectClient.getSdkStatus(context) == HealthConnectClient.SDK_AVAILABLE) {
             HealthConnectClient.getOrCreate(context)
         } else {
@@ -55,6 +56,7 @@ class HealthConnectRepository(private val context: Context) {
         val response = client.readRecords(request)
         return response.records.map {
             StepTelemetry(
+                id = it.metadata.clientRecordId ?: "",
                 count = it.count,
                 startTime = it.startTime,
                 endTime = it.endTime
@@ -62,34 +64,95 @@ class HealthConnectRepository(private val context: Context) {
         }
     }
 
-    suspend fun insertSampleSteps(count: Long): Boolean {
-        val client = healthConnectClient ?: return false
+    suspend fun readRecentWorkouts(days: Long = 1): List<WorkoutTelemetry> {
+        val client = healthConnectClient ?: return emptyList()
         val endTime = Instant.now()
-        val startTime = endTime.minus(30, ChronoUnit.MINUTES)
+        val startTime = endTime.minus(days, ChronoUnit.DAYS)
+
+        val request = ReadRecordsRequest(
+            recordType = ExerciseSessionRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(startTime, endTime)
+        )
+        val response = client.readRecords(request)
+        return response.records.map {
+            WorkoutTelemetry(
+                id = it.metadata.clientRecordId ?: "",
+                title = it.title ?: "Exercise Session",
+                exerciseType = it.exerciseType.toString(),
+                startTime = it.startTime,
+                endTime = it.endTime
+            )
+        }
+    }
+
+    suspend fun insertSteps(steps: StepTelemetry): Boolean {
+        val client = healthConnectClient ?: return false
+        val recordId = if (steps.id.isNotBlank()) steps.id else "steps_${steps.startTime.epochSecond}"
+
+        // Deduplication check: check if record already exists in Health Connect
+        val existing = client.readRecords(
+            ReadRecordsRequest(
+                recordType = StepsRecord::class,
+                timeRangeFilter = TimeRangeFilter.between(
+                    steps.startTime.minusSeconds(1),
+                    steps.endTime.plusSeconds(1)
+                )
+            )
+        )
+
+        val isDuplicate = existing.records.any {
+            it.metadata.clientRecordId == recordId ||
+                    (it.startTime == steps.startTime && it.endTime == steps.endTime)
+        }
+
+        if (isDuplicate) {
+            return false
+        }
 
         val record = StepsRecord(
-            count = count,
-            startTime = startTime,
+            count = steps.count,
+            startTime = steps.startTime,
             startZoneOffset = null,
-            endTime = endTime,
-            endZoneOffset = null
+            endTime = steps.endTime,
+            endZoneOffset = null,
+            metadata = Metadata(clientRecordId = recordId)
         )
         client.insertRecords(listOf(record))
         return true
     }
 
-    suspend fun insertSampleWorkout(title: String): Boolean {
+    suspend fun insertWorkout(workout: WorkoutTelemetry): Boolean {
         val client = healthConnectClient ?: return false
-        val endTime = Instant.now()
-        val startTime = endTime.minus(45, ChronoUnit.MINUTES)
+        val recordId = if (workout.id.isNotBlank()) workout.id else "workout_${workout.startTime.epochSecond}"
+
+        // Deduplication check: verify if workout with identical id or time already exists
+        val existing = client.readRecords(
+            ReadRecordsRequest(
+                recordType = ExerciseSessionRecord::class,
+                timeRangeFilter = TimeRangeFilter.between(
+                    workout.startTime.minusSeconds(1),
+                    workout.endTime.plusSeconds(1)
+                )
+            )
+        )
+
+        val isDuplicate = existing.records.any {
+            it.metadata.clientRecordId == recordId ||
+                    (it.startTime == workout.startTime && it.endTime == workout.endTime)
+        }
+
+        if (isDuplicate) {
+            return false
+        }
 
         val record = ExerciseSessionRecord(
-            startTime = startTime,
+            startTime = workout.startTime,
             startZoneOffset = null,
-            endTime = endTime,
+            endTime = workout.endTime,
             endZoneOffset = null,
             exerciseType = ExerciseSessionRecord.EXERCISE_TYPE_RUNNING,
-            title = title
+            title = workout.title,
+            metadata = Metadata(clientRecordId = recordId)
         )
         client.insertRecords(listOf(record))
         return true
@@ -101,6 +164,7 @@ class HealthConnectRepository(private val context: Context) {
 
         return try {
             val steps = readRecentSteps(days = 1)
+            val workouts = readRecentWorkouts(days = 1)
             val totalSteps = steps.sumOf { it.count }.toInt()
 
             SyncReport(
@@ -108,9 +172,9 @@ class HealthConnectRepository(private val context: Context) {
                 stepsSynced = totalSteps,
                 heartRateSamplesSynced = 0,
                 sleepSessionsSynced = 0,
-                workoutsSynced = 1,
+                workoutsSynced = workouts.size,
                 isSuccess = true,
-                message = "Synced $totalSteps steps successfully."
+                message = "Synced $totalSteps steps and ${workouts.size} workout(s) successfully."
             )
         } catch (e: Exception) {
             SyncReport(

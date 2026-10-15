@@ -161,7 +161,16 @@ class MainActivity : AppCompatActivity() {
         binding.btnSyncAllRoutes.isEnabled = false
     }
 
+    private var isSyncInProgress = false
+
     private fun triggerFullRouteSynchronization() {
+        if (isSyncInProgress) {
+            Toast.makeText(this, "Synchronization already running...", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        isSyncInProgress = true
+        binding.btnSyncAllRoutes.isEnabled = false
         binding.syncProgressBar.visibility = View.VISIBLE
         appendLog("Initiating multi-app sync pipeline across active routes…")
 
@@ -171,7 +180,6 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val results = routerEngine.executeAllActivePairings()
-                binding.syncProgressBar.visibility = View.GONE
 
                 for (res in results) {
                     if (res.isSuccess) {
@@ -184,8 +192,11 @@ class MainActivity : AppCompatActivity() {
                 updateRouteCardsUI()
                 refreshDashboardMetrics()
             } catch (e: Exception) {
-                binding.syncProgressBar.visibility = View.GONE
                 appendLog("Sync error: ${e.message}")
+            } finally {
+                binding.syncProgressBar.visibility = View.GONE
+                binding.btnSyncAllRoutes.isEnabled = true
+                isSyncInProgress = false
             }
         }
     }
@@ -214,11 +225,13 @@ class MainActivity : AppCompatActivity() {
     private suspend fun refreshDashboardMetrics() {
         try {
             val steps = repository.readRecentSteps(days = 1)
+            val workouts = repository.readRecentWorkouts(days = 1)
             val totalSteps = steps.sumOf { it.count }
-            binding.tvStepsValue.text = if (totalSteps > 0) totalSteps.toString() else "6,842"
+
+            binding.tvStepsValue.text = if (totalSteps > 0) totalSteps.toString() else "0"
             binding.tvHeartRateValue.text = "68"
             binding.tvSleepValue.text = "7.5"
-            binding.tvWorkoutValue.text = "Outdoor Run"
+            binding.tvWorkoutValue.text = if (workouts.isNotEmpty()) "${workouts.size} Session" else "0 Sessions"
         } catch (e: Exception) {
             appendLog("Metrics refresh notice: ${e.message}")
         }

@@ -8,6 +8,8 @@ import com.healthconnect.sync.data.WorkoutTelemetry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
 class HuaweiHealthProvider(private val context: Context) {
@@ -23,15 +25,19 @@ class HuaweiHealthProvider(private val context: Context) {
         set(value) = prefs.edit().putString(KEY_ACCOUNT_ID, value).apply()
 
     suspend fun fetchRecentWorkouts(since: Instant): List<WorkoutTelemetry> = withContext(Dispatchers.IO) {
-        val now = Instant.now()
-        val workoutStart = now.minus(50, ChronoUnit.MINUTES)
+        val today = LocalDate.now()
+        val workoutStart = today.atTime(7, 0).atZone(ZoneId.systemDefault()).toInstant()
+        val workoutEnd = workoutStart.plus(45, ChronoUnit.MINUTES)
+
+        val stableId = "huawei_workout_${today}_0700"
 
         listOf(
             WorkoutTelemetry(
+                id = stableId,
                 title = "Huawei Health Outdoor Run",
                 exerciseType = "Run",
                 startTime = workoutStart,
-                endTime = now.minus(5, ChronoUnit.MINUTES),
+                endTime = workoutEnd,
                 caloriesBurnedKcal = 385.0,
                 distanceMeters = 5240.0
             )
@@ -39,31 +45,43 @@ class HuaweiHealthProvider(private val context: Context) {
     }
 
     suspend fun fetchDailySteps(since: Instant): List<StepTelemetry> = withContext(Dispatchers.IO) {
-        val now = Instant.now()
+        val today = LocalDate.now()
+        val dayStart = today.atStartOfDay(ZoneId.systemDefault()).toInstant()
+        val dayEnd = dayStart.plus(18, ChronoUnit.HOURS)
+
+        val stableId = "huawei_steps_${today}"
+
         listOf(
             StepTelemetry(
+                id = stableId,
                 count = 6842,
-                startTime = now.minus(12, ChronoUnit.HOURS),
-                endTime = now
+                startTime = dayStart,
+                endTime = dayEnd
             )
         )
     }
 
     suspend fun fetchHeartRate(since: Instant): List<HeartRateTelemetry> = withContext(Dispatchers.IO) {
-        val now = Instant.now()
+        val today = LocalDate.now()
+        val sampleTime1 = today.atTime(8, 0).atZone(ZoneId.systemDefault()).toInstant()
+        val sampleTime2 = today.atTime(12, 30).atZone(ZoneId.systemDefault()).toInstant()
+
         listOf(
-            HeartRateTelemetry(bpm = 68, time = now.minus(15, ChronoUnit.MINUTES)),
-            HeartRateTelemetry(bpm = 74, time = now.minus(5, ChronoUnit.MINUTES))
+            HeartRateTelemetry(id = "huawei_hr_${today}_0800", bpm = 68, time = sampleTime1),
+            HeartRateTelemetry(id = "huawei_hr_${today}_1230", bpm = 74, time = sampleTime2)
         )
     }
 
     suspend fun fetchSleep(since: Instant): List<SleepTelemetry> = withContext(Dispatchers.IO) {
-        val now = Instant.now()
-        val sleepStart = now.minus(24, ChronoUnit.HOURS).plus(22, ChronoUnit.HOURS)
-        val sleepEnd = now.minus(24, ChronoUnit.HOURS).plus(29, ChronoUnit.HOURS).plus(30, ChronoUnit.MINUTES)
+        val yesterday = LocalDate.now().minusDays(1)
+        val sleepStart = yesterday.atTime(23, 0).atZone(ZoneId.systemDefault()).toInstant()
+        val sleepEnd = LocalDate.now().atTime(6, 30).atZone(ZoneId.systemDefault()).toInstant()
+
+        val stableId = "huawei_sleep_${yesterday}"
 
         listOf(
             SleepTelemetry(
+                id = stableId,
                 title = "Huawei TruSleep",
                 startTime = sleepStart,
                 endTime = sleepEnd,
