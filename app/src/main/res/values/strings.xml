@@ -43,6 +43,7 @@
     <!-- Empty and Loading States -->
     <string name="log_empty_state">No sync events recorded yet. Tap Synchronize Now to read data from Health Connect.</string>
     <string name="sync_in_progress">Synchronizing telemetry with Health Connect…</string>
+    <string name="sync_running">Synchronizing telemetry with Health Connect…</string>
     <string name="sync_success">Synchronization completed successfully.</string>
     <string name="sync_failed">Synchronization failed. Check permissions.</string>
 

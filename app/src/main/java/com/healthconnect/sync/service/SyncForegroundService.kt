@@ -53,7 +53,7 @@ class SyncForegroundService : Service() {
     private fun createNotification(): Notification {
         return NotificationCompat.Builder(this, HealthSyncApp.CHANNEL_ID)
             .setContentTitle(getString(R.string.app_name))
-            .setContentText(getString(R.string.sync_running))
+            .setContentText(getString(R.string.sync_in_progress))
             .setSmallIcon(android.R.drawable.stat_notify_sync)
             .setOngoing(true)
             .build()
