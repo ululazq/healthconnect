@@ -1,0 +1,184 @@
+[
+  {
+    "platform": "Fitbit",
+    "activity": "nl.appyhapps.healthsync.FitbitActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "fitbit",
+    "path": ""
+  },
+  {
+    "platform": "Polar",
+    "activity": "nl.appyhapps.healthsync.PolarActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "polar",
+    "path": ""
+  },
+  {
+    "platform": "Garmin",
+    "activity": "nl.appyhapps.healthsync.GarminActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "garmin",
+    "path": ""
+  },
+  {
+    "platform": "Garmin (Server Auth)",
+    "activity": "nl.appyhapps.healthsync.GarminActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/garmin-auth"
+  },
+  {
+    "platform": "FatSecret",
+    "activity": "nl.appyhapps.healthsync.FatSecretActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "fatsecret",
+    "path": ""
+  },
+  {
+    "platform": "Withings",
+    "activity": "nl.appyhapps.healthsync.WithingsActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/withings"
+  },
+  {
+    "platform": "Suunto",
+    "activity": "nl.appyhapps.healthsync.SuuntoActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "suunto",
+    "path": ""
+  },
+  {
+    "platform": "Oura",
+    "activity": "nl.appyhapps.healthsync.OuraActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "oura",
+    "path": ""
+  },
+  {
+    "platform": "Runalyze",
+    "activity": "nl.appyhapps.healthsync.RunalyzeActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "runalyze",
+    "path": ""
+  },
+  {
+    "platform": "Smashrun",
+    "activity": "nl.appyhapps.healthsync.SmashrunActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "smashrun",
+    "path": ""
+  },
+  {
+    "platform": "Strava",
+    "activity": "nl.appyhapps.healthsync.StravaActivity",
+    "scheme": "strava",
+    "host": "nl.appyhapps.healthsync",
+    "path": ""
+  },
+  {
+    "platform": "Intervals.icu",
+    "activity": "nl.appyhapps.healthsync.IntervalsActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/intervals-auth"
+  },
+  {
+    "platform": "Selfloops",
+    "activity": "nl.appyhapps.healthsync.SelfloopsActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/selfloops-auth"
+  },
+  {
+    "platform": "Google Health / Fit",
+    "activity": "nl.appyhapps.healthsync.GoogleHealthActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/google-health-auth"
+  },
+  {
+    "platform": "CoachWatts",
+    "activity": "nl.appyhapps.healthsync.CoachWattsActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/coachwatts_auth"
+  },
+  {
+    "platform": "Guava",
+    "activity": "nl.appyhapps.healthsync.GuavaActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/guava-auth"
+  },
+  {
+    "platform": "MyLibreo",
+    "activity": "nl.appyhapps.healthsync.MyLibreoActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/mylibreo-auth"
+  },
+  {
+    "platform": "TrainItAll",
+    "activity": "nl.appyhapps.healthsync.TrainItAllActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/trainitall-auth"
+  },
+  {
+    "platform": "Survon",
+    "activity": "nl.appyhapps.healthsync.SurvonActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/survonmd-auth"
+  },
+  {
+    "platform": "MoveMe",
+    "activity": "nl.appyhapps.healthsync.MoveMeActivity",
+    "scheme": "https",
+    "host": "server3.healthsync.app",
+    "path": "/move-me-auth"
+  },
+  {
+    "platform": "MedM",
+    "activity": "nl.appyhapps.healthsync.MedMActivity",
+    "scheme": "https",
+    "host": "server3.healthsync.app",
+    "path": "/medm-auth"
+  },
+  {
+    "platform": "RideWithGPS",
+    "activity": "nl.appyhapps.healthsync.RideWithGPSActivity",
+    "scheme": "https",
+    "host": "server3.healthsync.app",
+    "path": "/ridewithgps-auth"
+  },
+  {
+    "platform": "Coros",
+    "activity": "nl.appyhapps.healthsync.CorosActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/coros"
+  },
+  {
+    "platform": "Under Armour",
+    "activity": "nl.appyhapps.healthsync.UAActivity",
+    "scheme": "nl.appyhapps.healthsync",
+    "host": "underarmour",
+    "path": ""
+  },
+  {
+    "platform": "Schrittmeister",
+    "activity": "nl.appyhapps.healthsync.SchrittmeisterActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/schrittmeister"
+  },
+  {
+    "platform": "Huawei Health Cloud",
+    "activity": "nl.appyhapps.healthsync.HuaweiHealthCloudActivity",
+    "scheme": "https",
+    "host": "server.healthsync.app",
+    "path": "/huawei"
+  }
+]

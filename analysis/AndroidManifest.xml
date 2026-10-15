@@ -1,0 +1,624 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1224" android:versionName="7.9.2.8" android:compileSdkVersion="37" android:compileSdkVersionCodename="17" package="nl.appyhapps.healthsync" platformBuildVersionCode="37" platformBuildVersionName="17">
+  <uses-sdk android:minSdkVersion="24" android:targetSdkVersion="37"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="com.android.vending.BILLING"/>
+  <uses-permission android:name="android.permission.BLUETOOTH"/>
+  <uses-permission android:name="android.permission.RUN_USER_INITIATED_JOBS"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+  <uses-permission android:name="com.huawei.permission.external_app_settings.USE_COMPONENT"/>
+  <uses-permission android:name="android.permission.health.WRITE_ACTIVE_CALORIES_BURNED"/>
+  <uses-permission android:name="android.permission.health.WRITE_BASAL_METABOLIC_RATE"/>
+  <uses-permission android:name="android.permission.health.WRITE_BLOOD_GLUCOSE"/>
+  <uses-permission android:name="android.permission.health.WRITE_BLOOD_PRESSURE"/>
+  <uses-permission android:name="android.permission.health.WRITE_BODY_FAT"/>
+  <uses-permission android:name="android.permission.health.WRITE_BODY_WATER_MASS"/>
+  <uses-permission android:name="android.permission.health.WRITE_BONE_MASS"/>
+  <uses-permission android:name="android.permission.health.WRITE_CYCLING_PEDALING_CADENCE"/>
+  <uses-permission android:name="android.permission.health.WRITE_LEAN_BODY_MASS"/>
+  <uses-permission android:name="android.permission.health.WRITE_DISTANCE"/>
+  <uses-permission android:name="android.permission.health.WRITE_EXERCISE"/>
+  <uses-permission android:name="android.permission.health.WRITE_EXERCISE_ROUTE"/>
+  <uses-permission android:name="android.permission.health.WRITE_FLOORS_CLIMBED"/>
+  <uses-permission android:name="android.permission.health.WRITE_HEART_RATE"/>
+  <uses-permission android:name="android.permission.health.WRITE_HEART_RATE_VARIABILITY"/>
+  <uses-permission android:name="android.permission.health.WRITE_HEIGHT"/>
+  <uses-permission android:name="android.permission.health.WRITE_HYDRATION"/>
+  <uses-permission android:name="android.permission.health.WRITE_NUTRITION"/>
+  <uses-permission android:name="android.permission.health.WRITE_OXYGEN_SATURATION"/>
+  <uses-permission android:name="android.permission.health.WRITE_POWER"/>
+  <uses-permission android:name="android.permission.health.WRITE_RESPIRATORY_RATE"/>
+  <uses-permission android:name="android.permission.health.WRITE_RESTING_HEART_RATE"/>
+  <uses-permission android:name="android.permission.health.WRITE_BODY_TEMPERATURE"/>
+  <uses-permission android:name="android.permission.health.WRITE_SKIN_TEMPERATURE"/>
+  <uses-permission android:name="android.permission.health.WRITE_SLEEP"/>
+  <uses-permission android:name="android.permission.health.WRITE_SPEED"/>
+  <uses-permission android:name="android.permission.health.WRITE_STEPS"/>
+  <uses-permission android:name="android.permission.health.WRITE_STEPS_CADENCE"/>
+  <uses-permission android:name="android.permission.health.WRITE_TOTAL_CALORIES_BURNED"/>
+  <uses-permission android:name="android.permission.health.WRITE_WEIGHT"/>
+  <uses-permission android:name="android.permission.health.WRITE_VO2_MAX"/>
+  <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_HISTORY"/>
+  <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND"/>
+  <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED"/>
+  <uses-permission android:name="android.permission.health.READ_CYCLING_PEDALING_CADENCE"/>
+  <uses-permission android:name="android.permission.health.READ_DISTANCE"/>
+  <uses-permission android:name="android.permission.health.READ_STEPS"/>
+  <uses-permission android:name="android.permission.health.READ_SLEEP"/>
+  <uses-permission android:name="android.permission.health.READ_EXERCISE"/>
+  <uses-permission android:name="android.permission.health.READ_EXERCISE_ROUTES"/>
+  <uses-permission android:name="android.permission.health.READ_HEART_RATE"/>
+  <uses-permission android:name="android.permission.health.READ_WEIGHT"/>
+  <uses-permission android:name="android.permission.health.READ_BLOOD_GLUCOSE"/>
+  <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE"/>
+  <uses-permission android:name="android.permission.health.READ_BODY_FAT"/>
+  <uses-permission android:name="android.permission.health.READ_BODY_WATER_MASS"/>
+  <uses-permission android:name="android.permission.health.READ_BONE_MASS"/>
+  <uses-permission android:name="android.permission.health.READ_BASAL_METABOLIC_RATE"/>
+  <uses-permission android:name="android.permission.health.READ_OXYGEN_SATURATION"/>
+  <uses-permission android:name="android.permission.health.READ_POWER"/>
+  <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE"/>
+  <uses-permission android:name="android.permission.health.READ_RESTING_HEART_RATE"/>
+  <uses-permission android:name="android.permission.health.READ_BODY_TEMPERATURE"/>
+  <uses-permission android:name="android.permission.health.READ_SKIN_TEMPERATURE"/>
+  <uses-permission android:name="android.permission.health.READ_STEPS_CADENCE"/>
+  <uses-permission android:name="android.permission.health.READ_SPEED"/>
+  <uses-permission android:name="android.permission.health.READ_NUTRITION"/>
+  <uses-permission android:name="android.permission.health.READ_HYDRATION"/>
+  <uses-permission android:name="android.permission.health.READ_VO2_MAX"/>
+  <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED"/>
+  <uses-permission android:name="android.permission.health.READ_HEART_RATE_VARIABILITY"/>
+  <queries>
+    <package android:name="com.google.android.apps.fitness"/>
+    <package android:name="com.sec.android.app.shealth"/>
+    <package android:name="com.huawei.health"/>
+    <package android:name="com.betterme.health"/>
+    <package android:name="com.huawei.systemmanager"/>
+    <package android:name="com.huawei.hwid"/>
+    <package android:name="com.huawei.appmarket"/>
+    <package android:name="com.getpebble.android.basalt"/>
+    <package android:name="com.thevitalitygroup.vitalitytoday"/>
+    <package android:name="com.sparkcompass.advantahealthcare"/>
+    <package android:name="uk.co.vitality.memberapp"/>
+    <package android:name="com.mydiabetes"/>
+    <package android:name="com.mapmywalk.android2"/>
+    <package android:name="com.mapmyrun.android2"/>
+    <package android:name="com.mapmyfitness.android2"/>
+    <package android:name="com.mapmyride.android2"/>
+    <package android:name="com.android.chrome"/>
+    <package android:name="com.bfent.movemeapp"/>
+    <package android:name="com.google.android.gms"/>
+    <package android:name="com.google.android.apps.healthdata"/>
+    <intent>
+      <action android:name="android.intent.action.SENDTO"/>
+      <data android:scheme="*"/>
+    </intent>
+    <intent>
+      <action android:name="android.support.customtabs.action.CustomTabsService"/>
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.VIEW"/>
+      <data android:scheme="http"/>
+    </intent>
+    <intent>
+      <action android:name="com.android.vending.billing.InAppBillingService.BIND"/>
+    </intent>
+    <intent>
+      <action android:name="com.google.android.apps.play.billingtestcompanion.BillingOverrideService.BIND"/>
+    </intent>
+    <package android:name="com.google.android.apps.maps"/>
+    <intent>
+      <action android:name="com.huawei.health.action.KIT_SERVICE"/>
+    </intent>
+    <intent>
+      <action android:name="com.huawei.hms.core.aidlservice"/>
+    </intent>
+    <intent>
+      <action android:name="com.huawei.hms.core"/>
+    </intent>
+    <package android:name="com.huawei.hms"/>
+  </queries>
+  <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+  <permission android:name="nl.appyhapps.healthsync.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="0x00000002"/>
+  <uses-permission android:name="nl.appyhapps.healthsync.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"/>
+  <application android:theme="@7F14000C" android:label="@7F130058" android:icon="@7F100003" android:name="nl.appyhapps.healthsync.HealthSyncApp" android:backupAgent="nl.appyhapps.healthsync.HSBackupAgent" android:allowBackup="true" android:restoreAnyVersion="true" android:supportsRtl="false" android:extractNativeLibs="false" android:resizeableActivity="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:localeConfig="@7F160004" android:enableOnBackInvokedCallback="true">
+    <activity android:label="@7F130BC6" android:name="nl.appyhapps.healthsync.StripeCheckoutActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <meta-data android:name="com.google.android.backup.api_key" android:value="unused"/>
+    <activity android:name="nl.appyhapps.healthsync.MainActivity" android:exported="true" android:launchMode="1" android:resizeableActivity="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
+      </intent-filter>
+      <meta-data android:name="android.app.shortcuts" android:resource="@7F16000A"/>
+    </activity>
+    <activity-alias android:name="nl.appyhapps.healthsync.ViewPermissionUsageActivity" android:permission="android.permission.START_VIEW_PERMISSION_USAGE" android:exported="true" android:targetActivity="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
+        <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
+      </intent-filter>
+    </activity-alias>
+    <activity android:label="@7F130844" android:name="nl.appyhapps.healthsync.SettingsActivity" android:exported="false" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <receiver android:name="nl.appyhapps.healthsync.BootReceiver" android:enabled="true" android:exported="true">
+      <intent-filter android:priority="500">
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="nl.appyhapps.healthsync.PackageUpdatedReceiver" android:enabled="true" android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="nl.appyhapps.healthsync.StartSyncReceiver" android:enabled="true" android:exported="false">
+      <intent-filter>
+        <action android:name="nl.appyhapps.healthsync.trigger_sync_process"/>
+      </intent-filter>
+    </receiver>
+    <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false"/>
+    <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true"/>
+    <meta-data android:name="android.max_aspect" android:value="2.100000"/>
+    <meta-data android:name="com.samsung.android.health.permission.read" android:value="com.samsung.health.floors_climbed;com.samsung.health.nutrition;com.samsung.health.oxygen_saturation;com.samsung.health.step_count;com.samsung.health.body_fat;com.samsung.shealth.step_daily_trend;com.samsung.health.heart_rate;com.samsung.health.weight;com.samsung.health.sleep;com.samsung.health.sleep_stage;com.samsung.health.exercise;com.samsung.health.water_intake;com.samsung.health.blood_pressure;com.samsung.health.blood_glucose"/>
+    <meta-data android:name="com.samsung.android.health.permission.write" android:value="com.samsung.health.floors_climbed;com.samsung.health.nutrition;com.samsung.health.oxygen_saturation;com.samsung.health.step_count;com.samsung.health.body_fat;com.samsung.health.heart_rate;com.samsung.health.weight;com.samsung.health.sleep;com.samsung.health.sleep_stage;com.samsung.health.exercise;com.samsung.health.water_intake;com.samsung.health.blood_pressure;com.samsung.health.blood_glucose"/>
+    <activity android:label="@7F1303AC" android:name="nl.appyhapps.healthsync.InitializationActivity" android:exported="false" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <receiver android:name="nl.appyhapps.healthsync.HealthSyncWidget" android:exported="false">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider" android:resource="@7F160002"/>
+    </receiver>
+    <service android:name="nl.appyhapps.healthsync.SyncFGService" android:enabled="true" android:exported="false" android:foregroundServiceType="0x00000001"/>
+    <service android:name="nl.appyhapps.healthsync.SyncJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:enabled="true" android:exported="false"/>
+    <provider android:name="androidx.core.content.FileProvider" android:exported="false" android:authorities="nl.appyhapps.healthsync.fileprovider" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@7F160001"/>
+    </provider>
+    <activity android:label="@7F130BAA" android:name="nl.appyhapps.healthsync.FitbitActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="fitbit"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BBE" android:name="nl.appyhapps.healthsync.PolarActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="polar"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BAB" android:name="nl.appyhapps.healthsync.GarminActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="garmin"/>
+      </intent-filter>
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/garmin-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BA8" android:name="nl.appyhapps.healthsync.FatSecretActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="fatsecret"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BCE" android:name="nl.appyhapps.healthsync.WithingsActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/withings"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC8" android:name="nl.appyhapps.healthsync.SuuntoActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="suunto"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BBD" android:name="nl.appyhapps.healthsync.OuraActivity" android:exported="true" android:launchMode="2" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="oura"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BA6" android:name="nl.appyhapps.healthsync.DiabetesMActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC0" android:name="nl.appyhapps.healthsync.RunalyzeActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="runalyze"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC4" android:name="nl.appyhapps.healthsync.SmashrunActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="smashrun"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC5" android:name="nl.appyhapps.healthsync.StravaActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="strava" android:host="nl.appyhapps.healthsync"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BA2" android:name="nl.appyhapps.healthsync.Concept2Activity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <activity android:label="@7F130BB7" android:name="nl.appyhapps.healthsync.IntervalsActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/intervals-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC3" android:name="nl.appyhapps.healthsync.SelfloopsActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/selfloops-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BAE" android:name="nl.appyhapps.healthsync.GoogleHealthActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/google-health-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BA1" android:name="nl.appyhapps.healthsync.CoachWattsActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/coachwatts_auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BAF" android:name="nl.appyhapps.healthsync.GuavaActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/guava-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BBB" android:name="nl.appyhapps.healthsync.MyLibreoActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/mylibreo-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC9" android:name="nl.appyhapps.healthsync.TrainItAllActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/trainitall-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC7" android:name="nl.appyhapps.healthsync.SurvonActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/survonmd-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BBA" android:name="nl.appyhapps.healthsync.MoveMeActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server3.healthsync.app" android:pathPrefix="/move-me-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BB8" android:name="nl.appyhapps.healthsync.MedMActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server3.healthsync.app" android:pathPrefix="/medm-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BBF" android:name="nl.appyhapps.healthsync.RideWithGPSActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server3.healthsync.app" android:pathPrefix="/ridewithgps-auth"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BCD" android:name="nl.appyhapps.healthsync.WahooActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <activity android:label="@7F130BB2" android:name="nl.appyhapps.healthsync.HistoryActivity" android:exported="false" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <activity android:label="@7F130BB0" android:name="nl.appyhapps.healthsync.HCExportActivity" android:exported="false" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <activity android:label="@7F130BA9" android:name="nl.appyhapps.healthsync.FilterActivity" android:exported="false" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity"/>
+    <activity android:label="@7F130BA3" android:name="nl.appyhapps.healthsync.CorosActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/coros"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BCA" android:name="nl.appyhapps.healthsync.UAActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="nl.appyhapps.healthsync" android:host="underarmour"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC2" android:name="nl.appyhapps.healthsync.SchrittmeisterActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/schrittmeister"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BAC" android:name="nl.appyhapps.healthsync.GoogleDriveActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BAD" android:name="nl.appyhapps.healthsync.GoogleFitActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BB4" android:name="nl.appyhapps.healthsync.HuaweiHealthActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BB3" android:name="nl.appyhapps.healthsync.HuaweiDriveActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BC1" android:name="nl.appyhapps.healthsync.SamsungHealthActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BB1" android:name="nl.appyhapps.healthsync.HealthConnectActivity" android:exported="false" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity android:label="@7F130BB4" android:name="nl.appyhapps.healthsync.HuaweiHealthCloudActivity" android:exported="true" android:launchMode="1" android:parentActivityName="nl.appyhapps.healthsync.MainActivity">
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="server.healthsync.app" android:pathPrefix="/huawei"/>
+      </intent-filter>
+    </activity>
+    <activity android:name="nl.appyhapps.healthsync.SyncStartActivity" android:enabled="true" android:exported="false" android:taskAffinity=""/>
+    <meta-data android:name="com.huawei.hms.client.appid" android:value="103198029"/>
+    <meta-data android:name="com.google.android.gms.version" android:value="@7F0B0008"/>
+    <provider android:name="androidx.startup.InitializationProvider" android:exported="false" android:authorities="nl.appyhapps.healthsync.androidx-startup">
+      <meta-data android:name="com.google.maps.android.utils.attribution.AttributionIdInitializer" android:value="androidx.startup"/>
+      <meta-data android:name="androidx.work.WorkManagerInitializer" android:value="androidx.startup"/>
+      <meta-data android:name="androidx.emoji2.text.EmojiCompatInitializer" android:value="androidx.startup"/>
+      <meta-data android:name="androidx.lifecycle.ProcessLifecycleInitializer" android:value="androidx.startup"/>
+      <meta-data android:name="androidx.profileinstaller.ProfileInstallerInitializer" android:value="androidx.startup"/>
+    </provider>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.PaymentSheetActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.PaymentOptionsActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.customersheet.CustomerSheetActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.addresselement.AddressElementActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.addresselement.AutocompleteActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.paymentdatacollection.bacs.BacsMandateConfirmationActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.paymentdatacollection.polling.PollingActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.ui.SepaMandateActivity" android:exported="false"/>
+    <activity android:theme="@7F140218" android:name="com.stripe.android.paymentsheet.ExternalPaymentMethodProxyActivity" android:exported="false"/>
+    <activity android:theme="@7F140218" android:name="com.stripe.android.paymentelement.confirmation.cpms.CustomPaymentMethodProxyActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentsheet.paymentdatacollection.cvcrecollection.CvcRecollectionActivity"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentelement.embedded.form.FormActivity"/>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.paymentelement.embedded.manage.ManageActivity"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.attestation.AttestationActivity" android:exported="false"/>
+    <activity android:theme="@7F14021B" android:label="@7F1309D4" android:name="com.stripe.android.link.LinkActivity" android:exported="false" android:autoRemoveFromRecents="true"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.link.LinkForegroundActivity" android:launchMode="1" android:configChanges="0x00000DB0" android:autoRemoveFromRecents="true"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.link.LinkRedirectHandlerActivity" android:exported="true" android:launchMode="3" android:autoRemoveFromRecents="true">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="link-popup" android:host="complete" android:path="/nl.appyhapps.healthsync"/>
+      </intent-filter>
+    </activity>
+    <activity android:theme="@7F14021B" android:name="com.stripe.android.shoppay.ShopPayActivity"/>
+    <activity android:theme="@7F140213" android:name="com.stripe.android.view.PaymentAuthWebViewActivity" android:exported="false"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.view.PaymentRelayActivity" android:exported="false"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.payments.StripeBrowserLauncherActivity" android:exported="false" android:launchMode="2"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.payments.StripeBrowserProxyReturnActivity" android:exported="true" android:launchMode="2">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="stripesdk" android:host="payment_return_url" android:path="/nl.appyhapps.healthsync"/>
+      </intent-filter>
+    </activity>
+    <activity android:theme="@7F140213" android:name="com.stripe.android.payments.core.authentication.threeds2.Stripe3ds2TransactionActivity" android:exported="false"/>
+    <activity android:theme="@7F140216" android:name="com.stripe.android.googlepaylauncher.GooglePayLauncherActivity" android:exported="false"/>
+    <activity android:theme="@7F140216" android:name="com.stripe.android.googlepaylauncher.GooglePayPaymentMethodLauncherActivity" android:exported="false"/>
+    <activity android:theme="@7F140218" android:name="com.stripe.android.payments.paymentlauncher.PaymentLauncherConfirmationActivity" android:exported="false"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.payments.bankaccount.ui.CollectBankAccountActivity" android:exported="false"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.challenge.passive.PassiveChallengeActivity" android:exported="false"/>
+    <activity android:theme="@7F14021E" android:name="com.stripe.android.challenge.passive.warmer.activity.PassiveChallengeWarmerActivity" android:exported="false"/>
+    <activity android:theme="@7F14021A" android:name="com.stripe.android.challenge.confirmation.IntentConfirmationChallengeActivity" android:exported="false"/>
+    <activity android:theme="@7F140205" android:name="com.stripe.android.stripe3ds2.views.ChallengeActivity" android:exported="false" android:configChanges="0x00000480"/>
+    <activity android:name="com.stripe.android.financialconnections.FinancialConnectionsSheetRedirectActivity" android:exported="true" android:launchMode="2">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="stripe-auth" android:host="link-accounts" android:pathPrefix="/nl.appyhapps.healthsync/authentication_return"/>
+        <data android:scheme="stripe-auth" android:host="link-native-accounts" android:pathPrefix="/nl.appyhapps.healthsync/authentication_return"/>
+        <data android:scheme="stripe-auth" android:host="link-accounts" android:path="/nl.appyhapps.healthsync/success"/>
+        <data android:scheme="stripe-auth" android:host="link-accounts" android:path="/nl.appyhapps.healthsync/cancel"/>
+        <data android:scheme="stripe-auth" android:host="native-redirect" android:pathPrefix="/nl.appyhapps.healthsync"/>
+        <data android:scheme="stripe" android:host="auth-redirect" android:pathPrefix="/nl.appyhapps.healthsync"/>
+      </intent-filter>
+    </activity>
+    <activity android:theme="@7F140215" android:name="com.stripe.android.financialconnections.FinancialConnectionsSheetActivity" android:exported="false"/>
+    <activity android:theme="@7F140215" android:name="com.stripe.android.financialconnections.ui.FinancialConnectionsSheetNativeActivity" android:exported="false" android:windowSoftInputMode="0x00000010"/>
+    <activity android:name="com.stripe.android.financialconnections.lite.FinancialConnectionsSheetLiteRedirectActivity" android:exported="true" android:launchMode="2">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="stripe" android:host="financial-connections-lite" android:pathPrefix="/nl.appyhapps.healthsync/auth_redirect"/>
+      </intent-filter>
+    </activity>
+    <activity android:theme="@7F14020A" android:name="com.stripe.android.financialconnections.lite.FinancialConnectionsSheetLiteActivity"/>
+    <meta-data android:name="com.google.android.play.billingclient.version" android:value="8.3.0"/>
+    <activity android:theme="@android:01030010" android:name="com.android.billingclient.api.ProxyBillingActivity" android:exported="false" android:configChanges="0x000005B0"/>
+    <activity android:theme="@android:01030010" android:name="com.android.billingclient.api.ProxyBillingActivityV2" android:exported="false" android:configChanges="0x000005B0"/>
+    <service android:name="androidx.health.platform.client.impl.sdkservice.HealthDataSdkService" android:enabled="true" android:exported="true">
+      <intent-filter>
+        <action android:name="androidx.health.platform.client.ACTION_BIND_SDK_SERVICE"/>
+      </intent-filter>
+    </service>
+    <activity android:theme="@android:01030010" android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" android:exported="false" android:excludeFromRecents="true"/>
+    <service android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" android:exported="true" android:visibleToInstantApps="true"/>
+    <meta-data android:name="com.google.gms.fitness.sdk.version" android:value="21.3.0"/>
+    <activity android:theme="@android:01030010" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:exported="false"/>
+    <service android:name="androidx.room.MultiInstanceInvalidationService" android:exported="false" android:directBootAware="true"/>
+    <service android:name="androidx.work.impl.background.systemalarm.SystemAlarmService" android:enabled="@7F050003" android:exported="false" android:directBootAware="false"/>
+    <service android:name="androidx.work.impl.background.systemjob.SystemJobService" android:permission="android.permission.BIND_JOB_SERVICE" android:enabled="@7F050005" android:exported="true" android:directBootAware="false"/>
+    <service android:name="androidx.work.impl.foreground.SystemForegroundService" android:enabled="@7F050004" android:exported="false" android:directBootAware="false"/>
+    <receiver android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver" android:enabled="true" android:exported="false" android:directBootAware="false"/>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+        <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.BATTERY_OKAY"/>
+        <action android:name="android.intent.action.BATTERY_LOW"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.DEVICE_STORAGE_LOW"/>
+        <action android:name="android.intent.action.DEVICE_STORAGE_OK"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver" android:enabled="false" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <action android:name="android.intent.action.TIME_SET"/>
+        <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver" android:enabled="@7F050003" android:exported="false" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies"/>
+      </intent-filter>
+    </receiver>
+    <receiver android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" android:permission="android.permission.DUMP" android:enabled="true" android:exported="true" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS"/>
+      </intent-filter>
+    </receiver>
+    <uses-library android:name="androidx.window.extensions" android:required="false"/>
+    <uses-library android:name="androidx.window.sidecar" android:required="false"/>
+    <receiver android:name="androidx.profileinstaller.ProfileInstallReceiver" android:permission="android.permission.DUMP" android:enabled="true" android:exported="true" android:directBootAware="false">
+      <intent-filter>
+        <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="androidx.profileinstaller.action.SKIP_FILE"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="androidx.profileinstaller.action.SAVE_PROFILE"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION"/>
+      </intent-filter>
+    </receiver>
+    <service android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery" android:exported="false">
+      <meta-data android:name="backend:com.google.android.datatransport.cct.CctBackendFactory" android:value="cct"/>
+    </service>
+    <service android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false"/>
+    <receiver android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver" android:exported="false"/>
+    <meta-data android:name="com.huawei.hms.client.service.name:drive" android:value="drive:5.2.0.300"/>
+    <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+    <meta-data android:name="networkservice_ai" android:value="com.huawei.hms.network.ai.AIPolicyService"/>
+    <meta-data android:name="networkservice_config" android:value="com.huawei.hms.network.conf.api.ConfigService"/>
+    <meta-data android:name="networkservice_dns" android:value="com.huawei.hms.network.dns.DNSService"/>
+    <meta-data android:name="com.huawei.hms.client.service.name:network-api" android:value="network-api:5.0.4.300"/>
+    <meta-data android:name="com.huawei.hms.min_api_level:network-api:huawei_module_networkkit" android:value="6"/>
+    <activity android:theme="@android:01030010" android:name="com.huawei.hms.hihealth.activity.HealthKitAuthHubActivity" android:exported="false"/>
+    <activity android:name="com.huawei.hms.hihealth.activity.HealthKitWebViewActivity" android:exported="false"/>
+    <activity android:theme="@android:01030010" android:name="com.huawei.hms.hihealth.activity.HealthKitTransparentActivity" android:exported="false" android:launchMode="3" android:configChanges="0x00000480"/>
+    <meta-data android:name="com.huawei.hms.client.service.name:health" android:value="health:6.8.0.300"/>
+    <meta-data android:name="com.huawei.hms.min_api_level:hihealth-base:hihealth" android:value="15"/>
+    <meta-data android:name="com.huawei.hihealthkit.hihealthkitapi.sdk.api_level" android:value="7"/>
+    <meta-data android:name="com.huawei.hms.client.service.name:hihealthkit" android:value="hihealthkit:6.7.0.300"/>
+    <activity android:theme="@android:01030010" android:name="com.huawei.hihealthkit.BridgeClientActivity" android:exported="false" android:excludeFromRecents="true" android:configChanges="0x00000DA0"/>
+    <activity android:theme="@android:01030010" android:name="com.huawei.hms.hwid.internal.ui.activity.HwIdSignInHubActivity" android:exported="false" android:excludeFromRecents="true" android:configChanges="0x40000200"/>
+    <activity android:theme="@android:01030010" android:name="com.huawei.hms.account.internal.ui.activity.AccountSignInHubActivity" android:exported="false" android:excludeFromRecents="true"/>
+    <meta-data android:name="com.huawei.hms.client.service.name:hwid" android:value="hwid:6.4.0.301"/>
+    <meta-data android:name="com.huawei.hms.min_api_level:hwid:hwid" android:value="1"/>
+    <meta-data android:name="com.huawei.hms.min_api_level:hwid:account" android:value="13"/>
+    <meta-data android:name="com.huawei.hms.client.service.name:base" android:value="base:6.5.0.300"/>
+    <meta-data android:name="com.huawei.hms.min_api_level:base:hmscore" android:value="1"/>
+    <meta-data android:name="availableLoaded" android:value="yes"/>
+    <activity android:theme="@7F140130" android:name="com.huawei.hms.activity.BridgeActivity" android:exported="false" android:excludeFromRecents="true" android:screenOrientation="3" android:configChanges="0x40002F84" android:hardwareAccelerated="true">
+      <meta-data android:name="hwc-theme" android:value="androidhwext:style/Theme.Emui.Translucent"/>
+    </activity>
+    <activity android:name="com.huawei.hms.activity.EnableServiceActivity" android:exported="false" android:configChanges="0x00000DA0"/>
+    <provider android:name="com.huawei.agconnect.core.provider.AGConnectInitializeProvider" android:exported="false" android:authorities="nl.appyhapps.healthsync.AGCInitializeProvider"/>
+    <service android:name="com.huawei.agconnect.core.ServiceDiscovery" android:exported="false"/>
+    <meta-data android:name="aia-compat-api-min-version" android:value="1"/>
+    <meta-data android:name="com.huawei.hms.client.service.name:dynamic-api" android:value="dynamic-api:1.0.17.300"/>
+    <meta-data android:name="com.huawei.hms.min_api_level:dynamic-api:huawei_module_dynamicloader" android:value="6"/>
+    <activity android:theme="@7F140325" android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity" android:exported="false" android:stateNotNeeded="true"/>
+  </application>
+</manifest>

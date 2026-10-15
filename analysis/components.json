@@ -1,0 +1,46 @@
+{
+  "package": "nl.appyhapps.healthsync",
+  "version_name": "7.9.2.8",
+  "version_code": 1224,
+  "min_sdk": 24,
+  "target_sdk": 37,
+  "main_activity": "nl.appyhapps.healthsync.MainActivity",
+  "services": [
+    {
+      "name": "nl.appyhapps.healthsync.SyncFGService",
+      "type": "Foreground Data Sync",
+      "flags": "foregroundServiceType=0x00000001 (dataSync)"
+    },
+    {
+      "name": "nl.appyhapps.healthsync.SyncJobService",
+      "type": "JobScheduler Service",
+      "permission": "android.permission.BIND_JOB_SERVICE"
+    },
+    {
+      "name": "androidx.health.platform.client.impl.sdkservice.HealthDataSdkService",
+      "type": "Health Connect SDK Service"
+    },
+    {
+      "name": "androidx.work.impl.background.systemjob.SystemJobService",
+      "type": "WorkManager JobService"
+    },
+    {
+      "name": "androidx.work.impl.foreground.SystemForegroundService",
+      "type": "WorkManager Foreground"
+    }
+  ],
+  "native_libraries": [
+    "lib/arm64-v8a/libandroidx.graphics.path.so",
+    "lib/arm64-v8a/libdatastore_shared_counter.so",
+    "lib/arm64-v8a/libzstd-jni-1.5.7-13.so",
+    "lib/armeabi-v7a/libandroidx.graphics.path.so",
+    "lib/armeabi-v7a/libdatastore_shared_counter.so",
+    "lib/armeabi-v7a/libzstd-jni-1.5.7-13.so",
+    "lib/x86/libandroidx.graphics.path.so",
+    "lib/x86/libdatastore_shared_counter.so",
+    "lib/x86/libzstd-jni-1.5.7-13.so",
+    "lib/x86_64/libandroidx.graphics.path.so",
+    "lib/x86_64/libdatastore_shared_counter.so",
+    "lib/x86_64/libzstd-jni-1.5.7-13.so"
+  ]
+}

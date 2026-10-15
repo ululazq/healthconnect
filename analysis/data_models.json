@@ -1,0 +1,177 @@
+[
+  {
+    "class": "ActivityData",
+    "health_connect_equivalent": "ExerciseSessionRecord",
+    "description": "Workout and general activity logs"
+  },
+  {
+    "class": "AltitudeData",
+    "health_connect_equivalent": "ElevationGainedRecord",
+    "description": "Elevation gain and altitude metrics"
+  },
+  {
+    "class": "BinningHRData",
+    "health_connect_equivalent": "HeartRateRecord",
+    "description": "Aggregated/binned heart rate series"
+  },
+  {
+    "class": "BinningStepData",
+    "health_connect_equivalent": "StepsRecord",
+    "description": "Aggregated/binned step counts over time intervals"
+  },
+  {
+    "class": "BloodPressureData",
+    "health_connect_equivalent": "BloodPressureRecord",
+    "description": "Systolic and diastolic blood pressure readings"
+  },
+  {
+    "class": "BloodSugarData",
+    "health_connect_equivalent": "BloodGlucoseRecord",
+    "description": "Blood sugar / glucose concentration levels"
+  },
+  {
+    "class": "Cadence",
+    "health_connect_equivalent": "CyclingPedalingCadenceRecord / StepsCadenceRecord",
+    "description": "Pedaling or step cadence rate"
+  },
+  {
+    "class": "Calories",
+    "health_connect_equivalent": "ActiveCaloriesBurnedRecord / TotalCaloriesBurnedRecord / BasalMetabolicRateRecord",
+    "description": "Energy expenditure metrics"
+  },
+  {
+    "class": "Distance",
+    "health_connect_equivalent": "DistanceRecord",
+    "description": "Total traversed distance in meters"
+  },
+  {
+    "class": "ExerciseSyncResult",
+    "health_connect_equivalent": "N/A (Internal)",
+    "description": "Status and payload transfer result for exercises"
+  },
+  {
+    "class": "FloorsClimbedData",
+    "health_connect_equivalent": "FloorsClimbedRecord",
+    "description": "Floors climbed count"
+  },
+  {
+    "class": "FoodDescription",
+    "health_connect_equivalent": "NutritionRecord",
+    "description": "Detailed meal & food entry info"
+  },
+  {
+    "class": "HRVData",
+    "health_connect_equivalent": "HeartRateVariabilityRmssdRecord",
+    "description": "Heart rate variability measurements"
+  },
+  {
+    "class": "HeartRateData",
+    "health_connect_equivalent": "HeartRateRecord / RestingHeartRateRecord",
+    "description": "Point-in-time and resting heart rate data"
+  },
+  {
+    "class": "LapData",
+    "health_connect_equivalent": "ExerciseLap",
+    "description": "Exercise interval and lap markers"
+  },
+  {
+    "class": "LiveData",
+    "health_connect_equivalent": "N/A (Internal)",
+    "description": "Real-time sync streaming status"
+  },
+  {
+    "class": "LocationData",
+    "health_connect_equivalent": "ExerciseRoute",
+    "description": "GPS route points and coordinates"
+  },
+  {
+    "class": "NutritionData",
+    "health_connect_equivalent": "NutritionRecord",
+    "description": "Macronutrients and calories consumed"
+  },
+  {
+    "class": "OxygenSaturationData",
+    "health_connect_equivalent": "OxygenSaturationRecord",
+    "description": "SpO2 percentage"
+  },
+  {
+    "class": "PowerData",
+    "health_connect_equivalent": "PowerRecord",
+    "description": "Cycling/running power output (watts)"
+  },
+  {
+    "class": "RespirationData",
+    "health_connect_equivalent": "RespiratoryRateRecord",
+    "description": "Breaths per minute during rest or sleep"
+  },
+  {
+    "class": "SHLength",
+    "health_connect_equivalent": "SwimmingStrokesRecord",
+    "description": "Samsung Health swimming pool lap length"
+  },
+  {
+    "class": "SHSwimmingData",
+    "health_connect_equivalent": "ExerciseSessionRecord (Swimming)",
+    "description": "Swimming sessions with stroke details"
+  },
+  {
+    "class": "SetData",
+    "health_connect_equivalent": "ExerciseSessionRecord / ExerciseSegment",
+    "description": "Strength training sets and repetitions"
+  },
+  {
+    "class": "SleepPeriod",
+    "health_connect_equivalent": "SleepSessionRecord",
+    "description": "Total sleep window and stages"
+  },
+  {
+    "class": "SleepStage",
+    "health_connect_equivalent": "SleepStageRecord",
+    "description": "Awake, REM, light, deep sleep intervals"
+  },
+  {
+    "class": "Speed",
+    "health_connect_equivalent": "SpeedRecord",
+    "description": "Velocity measurements over time"
+  },
+  {
+    "class": "StepData",
+    "health_connect_equivalent": "StepsRecord",
+    "description": "Discrete step counts"
+  },
+  {
+    "class": "StrokeData",
+    "health_connect_equivalent": "SwimmingStrokesRecord",
+    "description": "Swimming stroke count & type"
+  },
+  {
+    "class": "SwimmingLengthData",
+    "health_connect_equivalent": "SwimmingStrokesRecord",
+    "description": "Lap distance and cadence in swimming"
+  },
+  {
+    "class": "TemperatureData",
+    "health_connect_equivalent": "BodyTemperatureRecord / SkinTemperatureRecord",
+    "description": "Body and skin temperature"
+  },
+  {
+    "class": "VO2MaxData",
+    "health_connect_equivalent": "Vo2MaxRecord",
+    "description": "Maximum oxygen consumption (VO2 max)"
+  },
+  {
+    "class": "WaterData",
+    "health_connect_equivalent": "HydrationRecord",
+    "description": "Daily water / hydration intake"
+  },
+  {
+    "class": "WeightData",
+    "health_connect_equivalent": "WeightRecord / BodyFatRecord / LeanBodyMassRecord / BoneMassRecord / BodyWaterMassRecord",
+    "description": "Body composition metrics"
+  },
+  {
+    "class": "WorkoutData",
+    "health_connect_equivalent": "ExerciseSessionRecord",
+    "description": "Workout sessions with sub-records"
+  }
+]
