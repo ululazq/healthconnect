@@ -62,13 +62,15 @@ Aplikasi mengintegrasikan lebih dari 25 platform kesehatan global:
 
 ---
 
-## 🛠️ Rebuilt Open-Source Android Application
+## 🛠️ Rebuilt Open-Source Android Application: healthConnect
 
 Berdasarkan hasil analisis reverse engineering terhadap Health Sync, proyek ini merekonstruksi aplikasi sinkronisasi Health Connect dalam bentuk proyek Android Native modern berbasis **Kotlin**, **Android Jetpack**, dan **Health Connect Client SDK**:
 
+- **App Name**: `healthConnect`
 - **Package**: `com.healthconnect.sync`
 - **Health Connect Client**: `androidx.health.connect:connect-client:1.1.0-alpha11`
-- **UI Architecture**: Material 3 + ViewBinding
+- **UI Architecture**: Material 3 (Day/Night Theme) + ViewBinding + Telemetry Cards Grid
+- **Design System & Antislop**: Mengikuti standar `DESIGN.md` (ENERGY 2 / RHYTHM 2 / MOTION 1) dengan palet berkontras tinggi (WCAG AA) dan bebas dari elemen dekoratif AI yang artifisial
 - **Background Engine**: Android Jetpack WorkManager (`PeriodicWorkRequest`) + Foreground Data Sync Service (`SyncForegroundService`)
 - **Permission Flow**: Rationale permission dialog handler (`androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE`) & Privacy policy alias (`ViewPermissionUsageActivity`)
 
@@ -79,12 +81,13 @@ Berdasarkan hasil analisis reverse engineering terhadap Health Sync, proyek ini 
 Aplikasi dikompilasi secara otomatis di awan melalui **GitHub Actions Workflow** (`.github/workflows/android-build.yml`):
 - Berjalan di runner `ubuntu-latest` dengan JDK 17 & Android SDK.
 - Mengompilasi proyek dengan Gradle (`gradle assembleDebug`).
-- Menghasilkan file **`app-debug.apk`** yang dapat langsung diunduh dari tab **Actions > Artifacts** di repository GitHub tanpa perlu setup Android Studio lokal!
+- Menghasilkan file **`app-debug.apk`** yang dapat langsung diunduh dari tab **Actions > Artifacts** di repository GitHub tanpa perlu setup Android Studio lokal.
 
 ---
 
 ## 📖 Dokumentasi Lengkap
 
+- [Design System & Antislop Guide](DESIGN.md)
 - [Panduan Integrasi Health Connect](docs/HEALTH_CONNECT_INTEGRATION.md)
 - [Arsitektur Sistem & Rekayasa Balik](docs/ARCHITECTURE.md)
 - [Dekomposisi Manifes Android](analysis/AndroidManifest.xml)

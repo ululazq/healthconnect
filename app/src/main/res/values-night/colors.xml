@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand & Base Surface (Dark Mode) -->
+    <color name="primary">#34D399</color>
+    <color name="on_primary">#022C22</color>
+    <color name="primary_container">#064E3B</color>
+    <color name="on_primary_container">#A7F3D0</color>
+
+    <color name="background">#0F172A</color>
+    <color name="on_background">#F8FAFC</color>
+
+    <color name="surface">#1E293B</color>
+    <color name="on_surface">#F8FAFC</color>
+    <color name="on_surface_secondary">#94A3B8</color>
+
+    <color name="surface_variant">#334155</color>
+    <color name="on_surface_variant">#CBD5E1</color>
+
+    <color name="border_subtle">#334155</color>
+
+    <!-- Semantic Status (Dark Mode) -->
+    <color name="status_connected_bg">#064E3B</color>
+    <color name="status_connected_text">#6EE7B7</color>
+    <color name="status_warning_bg">#78350F</color>
+    <color name="status_warning_text">#FCD34D</color>
+    <color name="status_error_bg">#7F1D1D</color>
+    <color name="status_error_text">#FCA5A5</color>
+
+    <!-- Metric Card Accents (Dark Mode) -->
+    <color name="accent_steps">#38BDF8</color>
+    <color name="accent_steps_bg">#0C4A6E</color>
+    <color name="accent_hr">#FB7185</color>
+    <color name="accent_hr_bg">#881337</color>
+    <color name="accent_sleep">#A78BFA</color>
+    <color name="accent_sleep_bg">#4C1D95</color>
+    <color name="accent_workout">#FBBF24</color>
+    <color name="accent_workout_bg">#78350F</color>
+</resources>

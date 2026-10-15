@@ -1,14 +1,52 @@
 <resources>
-    <string name="app_name">HealthConnect Sync</string>
-    <string name="title_permissions_rationale">Health Connect Permission Rationale</string>
-    <string name="status_not_connected">Status: Not Connected</string>
-    <string name="status_connected">Status: Connected to Health Connect</string>
-    <string name="btn_check_health_connect">Check Health Connect</string>
-    <string name="btn_request_permissions">Grant Permissions</string>
-    <string name="btn_sync_now">Sync Health Data Now</string>
-    <string name="btn_insert_sample">Insert Sample Workout / Steps</string>
-    <string name="sync_summary_title">Sync Telemetry &amp; Logs</string>
-    <string name="channel_name">Health Data Sync</string>
-    <string name="channel_desc">Notifications for background health data synchronization</string>
-    <string name="sync_running">Syncing health records with Health Connect…</string>
+    <string name="app_name">healthConnect</string>
+    <string name="title_permissions_rationale">Health Data Permissions</string>
+    <string name="app_subtitle">Health &amp; Fitness Synchronization</string>
+
+    <!-- Status Indicators -->
+    <string name="status_connected">Connected</string>
+    <string name="status_disconnected">Action Required</string>
+    <string name="status_connected_desc">Health Connect is active and authorized.</string>
+    <string name="status_disconnected_desc">Grant permissions to start background sync.</string>
+
+    <!-- Metrics Cards -->
+    <string name="metric_steps_title">Steps</string>
+    <string name="metric_steps_default">0</string>
+    <string name="metric_steps_unit">steps</string>
+    <string name="metric_steps_sub">Daily activity</string>
+
+    <string name="metric_hr_title">Heart Rate</string>
+    <string name="metric_hr_default">--</string>
+    <string name="metric_hr_unit">bpm</string>
+    <string name="metric_hr_sub">Latest resting rate</string>
+
+    <string name="metric_sleep_title">Sleep</string>
+    <string name="metric_sleep_default">--</string>
+    <string name="metric_sleep_unit">hrs</string>
+    <string name="metric_sleep_sub">Last tracked session</string>
+
+    <string name="metric_workout_title">Workout</string>
+    <string name="metric_workout_default">None</string>
+    <string name="metric_workout_unit">recent</string>
+    <string name="metric_workout_sub">Exercise session</string>
+
+    <!-- Actions -->
+    <string name="btn_request_permissions">Authorize Health Connect</string>
+    <string name="btn_sync_now">Synchronize Now</string>
+    <string name="btn_insert_sample">Write Test Record</string>
+
+    <!-- Sections -->
+    <string name="section_overview">Activity Overview</string>
+    <string name="section_actions">Sync Controls</string>
+    <string name="section_log">Event Ledger</string>
+
+    <!-- Empty and Loading States -->
+    <string name="log_empty_state">No sync events recorded yet. Tap Synchronize Now to read data from Health Connect.</string>
+    <string name="sync_in_progress">Synchronizing telemetry with Health Connect…</string>
+    <string name="sync_success">Synchronization completed successfully.</string>
+    <string name="sync_failed">Synchronization failed. Check permissions.</string>
+
+    <!-- Notifications -->
+    <string name="channel_name">Data Synchronization</string>
+    <string name="channel_desc">Background health telemetry synchronization updates</string>
 </resources>
