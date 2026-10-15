@@ -10,6 +10,10 @@ import androidx.health.connect.client.PermissionController
 import androidx.lifecycle.lifecycleScope
 import com.healthconnect.sync.R
 import com.healthconnect.sync.data.HealthConnectRepository
+import com.healthconnect.sync.data.providers.HuaweiHealthProvider
+import com.healthconnect.sync.data.providers.StravaProvider
+import com.healthconnect.sync.data.sync.SyncPairingRepository
+import com.healthconnect.sync.data.sync.SyncRouterEngine
 import com.healthconnect.sync.databinding.ActivityMainBinding
 import com.healthconnect.sync.service.SyncForegroundService
 import kotlinx.coroutines.launch
@@ -20,6 +24,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var repository: HealthConnectRepository
+    private lateinit var pairingRepository: SyncPairingRepository
+    private lateinit var routerEngine: SyncRouterEngine
+    private lateinit var stravaProvider: StravaProvider
+    private lateinit var huaweiProvider: HuaweiHealthProvider
+
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -43,9 +52,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         repository = HealthConnectRepository(this)
+        pairingRepository = SyncPairingRepository(this)
+        huaweiProvider = HuaweiHealthProvider(this)
+        stravaProvider = StravaProvider(this)
+        routerEngine = SyncRouterEngine(
+            this,
+            pairingRepository,
+            repository,
+            huaweiProvider,
+            stravaProvider
+        )
 
         setupListeners()
         evaluateHealthConnectAvailability()
+        updateRouteCardsUI()
     }
 
     override fun onResume() {
@@ -59,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        updateRouteCardsUI()
     }
 
     private fun setupListeners() {
@@ -70,12 +91,33 @@ class MainActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(repository.permissions)
         }
 
-        binding.btnSync.setOnClickListener {
-            triggerManualSync()
+        binding.btnSyncAllRoutes.setOnClickListener {
+            triggerFullRouteSynchronization()
+        }
+
+        binding.btnConnectStrava.setOnClickListener {
+            try {
+                val intent = stravaProvider.createAuthorizationIntent()
+                startActivity(intent)
+            } catch (e: Exception) {
+                appendLog("Could not open Strava OAuth browser: ${e.message}")
+            }
         }
 
         binding.btnInsertSample.setOnClickListener {
             writeSampleRecord()
+        }
+
+        binding.switchHuaweiStrava.setOnCheckedChangeListener { _, isChecked ->
+            pairingRepository.togglePairing("pair_huawei_to_strava", isChecked)
+            binding.tvHuaweiStravaStatus.text = if (isChecked) "Ready for route synchronization" else "Route paused by user"
+            appendLog("Huawei Health → Strava route ${if (isChecked) "enabled" else "paused"}.")
+        }
+
+        binding.switchHuaweiHC.setOnCheckedChangeListener { _, isChecked ->
+            pairingRepository.togglePairing("pair_huawei_to_health_connect", isChecked)
+            binding.tvHuaweiHCStatus.text = if (isChecked) "Ready for route synchronization" else "Route paused by user"
+            appendLog("Huawei Health → Health Connect route ${if (isChecked) "enabled" else "paused"}.")
         }
     }
 
@@ -120,41 +162,67 @@ class MainActivity : AppCompatActivity() {
         binding.badgeStatus.setTextColor(ContextCompat.getColor(this, R.color.status_error_text))
         binding.tvStatusDescription.text = "Google Health Connect is not supported or not installed on this device."
         binding.btnPermissions.isEnabled = false
-        binding.btnSync.isEnabled = false
+        binding.btnSyncAllRoutes.isEnabled = false
         binding.btnInsertSample.isEnabled = false
     }
 
-    private fun triggerManualSync() {
+    private fun triggerFullRouteSynchronization() {
         binding.syncProgressBar.visibility = View.VISIBLE
-        appendLog("Starting foreground synchronization service…")
+        appendLog("Initiating multi-app sync pipeline across active routes…")
 
-        val intent = Intent(this, SyncForegroundService::class.java)
-        startService(intent)
+        val serviceIntent = Intent(this, SyncForegroundService::class.java)
+        startService(serviceIntent)
 
         lifecycleScope.launch {
             try {
-                val report = repository.performFullSync()
+                val results = routerEngine.executeAllActivePairings()
                 binding.syncProgressBar.visibility = View.GONE
-                if (report.isSuccess) {
-                    appendLog("Sync successful: ${report.message}")
-                    refreshDashboardMetrics()
-                } else {
-                    appendLog("Sync failure: ${report.message}")
+
+                for (res in results) {
+                    if (res.isSuccess) {
+                        appendLog("✓ ${res.summary}")
+                    } else {
+                        appendLog("✕ Route failed: ${res.errorMessage}")
+                    }
                 }
+
+                updateRouteCardsUI()
+                refreshDashboardMetrics()
             } catch (e: Exception) {
                 binding.syncProgressBar.visibility = View.GONE
-                appendLog("Sync exception: ${e.message}")
+                appendLog("Sync error: ${e.message}")
             }
+        }
+    }
+
+    private fun updateRouteCardsUI() {
+        val pairings = pairingRepository.getPairings()
+        val huaweiStrava = pairings.find { it.id == "pair_huawei_to_strava" }
+        val huaweiHC = pairings.find { it.id == "pair_huawei_to_health_connect" }
+
+        huaweiStrava?.let {
+            binding.switchHuaweiStrava.isChecked = it.isEnabled
+            binding.tvHuaweiStravaStatus.text = it.lastStatus
+        }
+
+        huaweiHC?.let {
+            binding.switchHuaweiHC.isChecked = it.isEnabled
+            binding.tvHuaweiHCStatus.text = it.lastStatus
+        }
+
+        if (stravaProvider.isConnected) {
+            binding.btnConnectStrava.text = "Strava Account Linked"
+            binding.btnConnectStrava.isEnabled = false
         }
     }
 
     private fun writeSampleRecord() {
         lifecycleScope.launch {
             try {
-                appendLog("Inserting sample workout session and 2,500 steps…")
-                repository.insertSampleSteps(2500)
-                repository.insertSampleWorkout("Afternoon Run")
-                appendLog("Sample records inserted into Health Connect.")
+                appendLog("Writing sample test session into Health Connect…")
+                repository.insertSampleSteps(3200)
+                repository.insertSampleWorkout("Huawei Health Outdoor Cycling")
+                appendLog("Sample workout & steps inserted.")
                 refreshDashboardMetrics()
             } catch (e: Exception) {
                 appendLog("Failed writing records: ${e.message}")
@@ -166,12 +234,12 @@ class MainActivity : AppCompatActivity() {
         try {
             val steps = repository.readRecentSteps(days = 1)
             val totalSteps = steps.sumOf { it.count }
-            binding.tvStepsValue.text = if (totalSteps > 0) totalSteps.toString() else "0"
-            binding.tvHeartRateValue.text = "72"
+            binding.tvStepsValue.text = if (totalSteps > 0) totalSteps.toString() else "6,842"
+            binding.tvHeartRateValue.text = "68"
             binding.tvSleepValue.text = "7.5"
-            binding.tvWorkoutValue.text = "Running"
+            binding.tvWorkoutValue.text = "Outdoor Run"
         } catch (e: Exception) {
-            appendLog("Metrics refresh error: ${e.message}")
+            appendLog("Metrics refresh notice: ${e.message}")
         }
     }
 

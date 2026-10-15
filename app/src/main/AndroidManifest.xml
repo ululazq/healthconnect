@@ -57,6 +57,13 @@
             <intent-filter>
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
+            <!-- Multi-Platform OAuth Redirect (e.g. Strava) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="healthconnect" android:host="strava-callback" />
+            </intent-filter>
         </activity>
 
         <activity

@@ -37,13 +37,24 @@
 
     <!-- Sections -->
     <string name="section_overview">Activity Overview</string>
+    <string name="section_routes">Active Sync Routes</string>
     <string name="section_actions">Sync Controls</string>
     <string name="section_log">Event Ledger</string>
 
+    <!-- Multi-Platform Routing -->
+    <string name="route_huawei_strava_title">Huawei Health → Strava</string>
+    <string name="route_huawei_strava_desc">Auto-syncs outdoor runs, rides, and workout telemetry</string>
+    <string name="route_huawei_hc_title">Huawei Health → Health Connect</string>
+    <string name="route_huawei_hc_desc">Auto-syncs steps, resting heart rate, and sleep cycles</string>
+    <string name="btn_sync_routes">Synchronize Configured Routes</string>
+    <string name="btn_connect_strava">Authorize Strava Account</string>
+    <string name="status_route_active">Active</string>
+    <string name="status_route_paused">Paused</string>
+
     <!-- Empty and Loading States -->
-    <string name="log_empty_state">No sync events recorded yet. Tap Synchronize Now to read data from Health Connect.</string>
-    <string name="sync_in_progress">Synchronizing telemetry with Health Connect…</string>
-    <string name="sync_running">Synchronizing telemetry with Health Connect…</string>
+    <string name="log_empty_state">No sync events recorded yet. Tap Synchronize to trigger route transfers.</string>
+    <string name="sync_in_progress">Synchronizing telemetry with configured platforms…</string>
+    <string name="sync_running">Synchronizing telemetry with configured platforms…</string>
     <string name="sync_success">Synchronization completed successfully.</string>
     <string name="sync_failed">Synchronization failed. Check permissions.</string>
 

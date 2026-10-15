@@ -20,10 +20,21 @@ class SyncForegroundService : Service() {
 
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private lateinit var repository: HealthConnectRepository
+    private lateinit var routerEngine: com.healthconnect.sync.data.sync.SyncRouterEngine
 
     override fun onCreate() {
         super.onCreate()
         repository = HealthConnectRepository(this)
+        val pairingRepo = com.healthconnect.sync.data.sync.SyncPairingRepository(this)
+        val huaweiProvider = com.healthconnect.sync.data.providers.HuaweiHealthProvider(this)
+        val stravaProvider = com.healthconnect.sync.data.providers.StravaProvider(this)
+        routerEngine = com.healthconnect.sync.data.sync.SyncRouterEngine(
+            this,
+            pairingRepo,
+            repository,
+            huaweiProvider,
+            stravaProvider
+        )
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -41,6 +52,7 @@ class SyncForegroundService : Service() {
 
         serviceScope.launch {
             try {
+                routerEngine.executeAllActivePairings()
                 repository.performFullSync()
             } finally {
                 stopSelf()
