@@ -30,8 +30,24 @@ data class WorkoutTelemetry(
     val startTime: Instant,
     val endTime: Instant,
     val caloriesBurnedKcal: Double? = null,
-    val distanceMeters: Double? = null
-)
+    val distanceMeters: Double? = null,
+    val avgHeartRateBpm: Int? = null,
+    val avgPaceOrSpeed: String? = null,
+    val source: String = "Huawei Health",
+    var isSyncedToHealthConnect: Boolean = false,
+    var isSyncedToStrava: Boolean = false
+) {
+    val durationMinutes: Long
+        get() = java.time.Duration.between(startTime, endTime).toMinutes().coerceAtLeast(1)
+
+    val distanceKmString: String
+        get() = if (distanceMeters != null && distanceMeters > 0) {
+            String.format(java.util.Locale.US, "%.2f km", distanceMeters / 1000.0)
+        } else {
+            "--"
+        }
+}
+
 
 data class SyncReport(
     val timestamp: Instant,

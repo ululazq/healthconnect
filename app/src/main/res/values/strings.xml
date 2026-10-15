@@ -60,4 +60,13 @@
     <!-- Notifications -->
     <string name="channel_name">Data Synchronization</string>
     <string name="channel_desc">Background health telemetry synchronization updates</string>
+
+    <!-- Huawei Activity Feed -->
+    <string name="section_huawei_activities">Huawei Health Activity Feed</string>
+    <string name="filter_all">All</string>
+    <string name="filter_run">Runs</string>
+    <string name="filter_ride">Rides</string>
+    <string name="filter_walk">Walks</string>
+    <string name="empty_activities">No Huawei Health activities found. Tap Sync to retrieve.</string>
 </resources>
+

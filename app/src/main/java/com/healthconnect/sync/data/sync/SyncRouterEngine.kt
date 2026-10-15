@@ -29,15 +29,21 @@ class SyncRouterEngine(
         prefs.edit().putStringSet(KEY_SYNCED_IDS, current).apply()
     }
 
+    fun isIdSynced(id: String): Boolean {
+        return getSyncedIds().contains(id)
+    }
+
+
     suspend fun executeAllActivePairings(): List<PairingSyncResult> = withContext(Dispatchers.IO) {
         val activePairings = pairingRepository.getPairings().filter { it.isEnabled }
         val results = mutableListOf<PairingSyncResult>()
 
-        val since = Instant.now().minus(24, ChronoUnit.HOURS)
+        val since = Instant.now().minus(7, ChronoUnit.DAYS)
 
         for (pairing in activePairings) {
             val result = executeSinglePairing(pairing, since)
             results.add(result)
+
             pairingRepository.updatePairingStatus(
                 pairing.id,
                 if (result.isSuccess) result.summary else "Failed: ${result.errorMessage}"

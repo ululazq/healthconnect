@@ -24,25 +24,78 @@ class HuaweiHealthProvider(private val context: Context) {
         get() = prefs.getString(KEY_ACCOUNT_ID, "Huawei_User_Sync")
         set(value) = prefs.edit().putString(KEY_ACCOUNT_ID, value).apply()
 
-    suspend fun fetchRecentWorkouts(since: Instant): List<WorkoutTelemetry> = withContext(Dispatchers.IO) {
+    suspend fun fetchRecentWorkouts(since: Instant = Instant.EPOCH): List<WorkoutTelemetry> = withContext(Dispatchers.IO) {
         val today = LocalDate.now()
-        val workoutStart = today.atTime(7, 0).atZone(ZoneId.systemDefault()).toInstant()
-        val workoutEnd = workoutStart.plus(45, ChronoUnit.MINUTES)
+        val yesterday = today.minusDays(1)
+        val twoDaysAgo = today.minusDays(2)
+        val threeDaysAgo = today.minusDays(3)
 
-        val stableId = "huawei_workout_${today}_0700"
+        val run1Start = today.atTime(6, 45).atZone(ZoneId.systemDefault()).toInstant()
+        val run1End = run1Start.plus(42, ChronoUnit.MINUTES)
 
-        listOf(
+        val ride1Start = yesterday.atTime(17, 15).atZone(ZoneId.systemDefault()).toInstant()
+        val ride1End = ride1Start.plus(55, ChronoUnit.MINUTES)
+
+        val walk1Start = twoDaysAgo.atTime(7, 30).atZone(ZoneId.systemDefault()).toInstant()
+        val walk1End = walk1Start.plus(38, ChronoUnit.MINUTES)
+
+        val run2Start = threeDaysAgo.atTime(6, 30).atZone(ZoneId.systemDefault()).toInstant()
+        val run2End = run2Start.plus(50, ChronoUnit.MINUTES)
+
+        val allWorkouts = listOf(
             WorkoutTelemetry(
-                id = stableId,
-                title = "Huawei Health Outdoor Run",
+                id = "huawei_workout_${today}_0645",
+                title = "Morning Outdoor Run",
                 exerciseType = "Run",
-                startTime = workoutStart,
-                endTime = workoutEnd,
-                caloriesBurnedKcal = 385.0,
-                distanceMeters = 5240.0
+                startTime = run1Start,
+                endTime = run1End,
+                caloriesBurnedKcal = 380.0,
+                distanceMeters = 5240.0,
+                avgHeartRateBpm = 148,
+                avgPaceOrSpeed = "5:18 /km",
+                source = "Huawei Health"
+            ),
+            WorkoutTelemetry(
+                id = "huawei_workout_${yesterday}_1715",
+                title = "Sunset Coastal Ride",
+                exerciseType = "Ride",
+                startTime = ride1Start,
+                endTime = ride1End,
+                caloriesBurnedKcal = 495.0,
+                distanceMeters = 18600.0,
+                avgHeartRateBpm = 134,
+                avgPaceOrSpeed = "20.3 km/h",
+                source = "Huawei Health"
+            ),
+            WorkoutTelemetry(
+                id = "huawei_workout_${twoDaysAgo}_0730",
+                title = "Park Brisk Walk",
+                exerciseType = "Walk",
+                startTime = walk1Start,
+                endTime = walk1End,
+                caloriesBurnedKcal = 185.0,
+                distanceMeters = 3450.0,
+                avgHeartRateBpm = 105,
+                avgPaceOrSpeed = "11:00 /km",
+                source = "Huawei Health"
+            ),
+            WorkoutTelemetry(
+                id = "huawei_workout_${threeDaysAgo}_0630",
+                title = "Tempo Endurance Run",
+                exerciseType = "Run",
+                startTime = run2Start,
+                endTime = run2End,
+                caloriesBurnedKcal = 460.0,
+                distanceMeters = 6800.0,
+                avgHeartRateBpm = 158,
+                avgPaceOrSpeed = "4:56 /km",
+                source = "Huawei Health"
             )
         )
+
+        allWorkouts.filter { it.startTime.isAfter(since) }
     }
+
 
     suspend fun fetchDailySteps(since: Instant): List<StepTelemetry> = withContext(Dispatchers.IO) {
         val today = LocalDate.now()
