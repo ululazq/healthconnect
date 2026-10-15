@@ -104,10 +104,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnInsertSample.setOnClickListener {
-            writeSampleRecord()
-        }
-
         binding.switchHuaweiStrava.setOnCheckedChangeListener { _, isChecked ->
             pairingRepository.togglePairing("pair_huawei_to_strava", isChecked)
             binding.tvHuaweiStravaStatus.text = if (isChecked) "Ready for route synchronization" else "Route paused by user"
@@ -163,7 +159,6 @@ class MainActivity : AppCompatActivity() {
         binding.tvStatusDescription.text = "Google Health Connect is not supported or not installed on this device."
         binding.btnPermissions.isEnabled = false
         binding.btnSyncAllRoutes.isEnabled = false
-        binding.btnInsertSample.isEnabled = false
     }
 
     private fun triggerFullRouteSynchronization() {
@@ -213,20 +208,6 @@ class MainActivity : AppCompatActivity() {
         if (stravaProvider.isConnected) {
             binding.btnConnectStrava.text = "Strava Account Linked"
             binding.btnConnectStrava.isEnabled = false
-        }
-    }
-
-    private fun writeSampleRecord() {
-        lifecycleScope.launch {
-            try {
-                appendLog("Writing sample test session into Health Connect…")
-                repository.insertSampleSteps(3200)
-                repository.insertSampleWorkout("Huawei Health Outdoor Cycling")
-                appendLog("Sample workout & steps inserted.")
-                refreshDashboardMetrics()
-            } catch (e: Exception) {
-                appendLog("Failed writing records: ${e.message}")
-            }
         }
     }
 

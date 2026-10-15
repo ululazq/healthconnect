@@ -33,7 +33,6 @@
     <!-- Actions -->
     <string name="btn_request_permissions">Authorize Health Connect</string>
     <string name="btn_sync_now">Synchronize Now</string>
-    <string name="btn_insert_sample">Write Test Record</string>
 
     <!-- Sections -->
     <string name="section_overview">Activity Overview</string>

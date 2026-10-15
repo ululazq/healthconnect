@@ -517,16 +517,6 @@
                 app:cornerRadius="12dp"
                 app:strokeColor="@color/primary"
                 app:strokeWidth="1dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnInsertSample"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/btn_insert_sample"
-                android:textColor="@color/on_surface_secondary"
-                android:textSize="14sp" />
         </LinearLayout>
 
         <!-- Section: Event Ledger -->
