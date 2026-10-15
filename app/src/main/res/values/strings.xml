@@ -44,7 +44,7 @@
     <string name="route_huawei_strava_title">Huawei Health → Strava</string>
     <string name="route_huawei_strava_desc">Auto-syncs outdoor runs, rides, and workout telemetry</string>
     <string name="route_huawei_hc_title">Huawei Health → Health Connect</string>
-    <string name="route_huawei_hc_desc">Auto-syncs steps, resting heart rate, and sleep cycles</string>
+    <string name="route_huawei_hc_desc">Auto-syncs workouts (GPS route, HR), steps, sleep, and heart rate</string>
     <string name="btn_sync_routes">Synchronize Configured Routes</string>
     <string name="btn_connect_strava">Authorize Strava Account</string>
     <string name="status_route_active">Active</string>
