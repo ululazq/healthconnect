@@ -105,8 +105,14 @@ class SyncRouterEngine(
                     if (pairing.enabledDataTypes.contains(SyncDataType.STEPS)) {
                         val stepsList = huaweiProvider.fetchDailySteps(since)
                         for (s in stepsList) {
+                            val routeKey = "hc_step_${s.id}"
+                            if (syncedIds.contains(routeKey)) {
+                                duplicatesSkipped++
+                                continue
+                            }
                             val inserted = healthConnectRepository.insertSteps(s)
                             if (inserted) {
+                                markIdSynced(routeKey)
                                 newTransferred++
                             } else {
                                 duplicatesSkipped++
@@ -117,14 +123,21 @@ class SyncRouterEngine(
                     if (pairing.enabledDataTypes.contains(SyncDataType.WORKOUTS)) {
                         val workouts = huaweiProvider.fetchRecentWorkouts(since)
                         for (w in workouts) {
+                            val routeKey = "hc_workout_${w.id}"
+                            if (syncedIds.contains(routeKey)) {
+                                duplicatesSkipped++
+                                continue
+                            }
                             val inserted = healthConnectRepository.insertWorkout(w)
                             if (inserted) {
+                                markIdSynced(routeKey)
                                 newTransferred++
                             } else {
                                 duplicatesSkipped++
                             }
                         }
                     }
+
 
                     val summary = if (newTransferred > 0) {
                         "$newTransferred record(s) synced into Health Connect" +

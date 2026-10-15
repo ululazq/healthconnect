@@ -7,7 +7,6 @@ import androidx.health.connect.client.records.ExerciseSessionRecord
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.StepsRecord
-import androidx.health.connect.client.records.metadata.Metadata
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import java.time.Instant
@@ -56,7 +55,7 @@ class HealthConnectRepository(private val context: Context) {
         val response = client.readRecords(request)
         return response.records.map {
             StepTelemetry(
-                id = it.metadata.clientRecordId ?: "",
+                id = it.metadata.id,
                 count = it.count,
                 startTime = it.startTime,
                 endTime = it.endTime
@@ -76,7 +75,7 @@ class HealthConnectRepository(private val context: Context) {
         val response = client.readRecords(request)
         return response.records.map {
             WorkoutTelemetry(
-                id = it.metadata.clientRecordId ?: "",
+                id = it.metadata.id,
                 title = it.title ?: "Exercise Session",
                 exerciseType = it.exerciseType.toString(),
                 startTime = it.startTime,
@@ -87,9 +86,8 @@ class HealthConnectRepository(private val context: Context) {
 
     suspend fun insertSteps(steps: StepTelemetry): Boolean {
         val client = healthConnectClient ?: return false
-        val recordId = if (steps.id.isNotBlank()) steps.id else "steps_${steps.startTime.epochSecond}"
 
-        // Deduplication check: check if record already exists in Health Connect
+        // Deduplication check: check if record with same time range already exists in Health Connect
         val existing = client.readRecords(
             ReadRecordsRequest(
                 recordType = StepsRecord::class,
@@ -101,8 +99,7 @@ class HealthConnectRepository(private val context: Context) {
         )
 
         val isDuplicate = existing.records.any {
-            it.metadata.clientRecordId == recordId ||
-                    (it.startTime == steps.startTime && it.endTime == steps.endTime)
+            it.startTime == steps.startTime && it.endTime == steps.endTime
         }
 
         if (isDuplicate) {
@@ -114,8 +111,7 @@ class HealthConnectRepository(private val context: Context) {
             startTime = steps.startTime,
             startZoneOffset = null,
             endTime = steps.endTime,
-            endZoneOffset = null,
-            metadata = Metadata(clientRecordId = recordId)
+            endZoneOffset = null
         )
         client.insertRecords(listOf(record))
         return true
@@ -123,9 +119,8 @@ class HealthConnectRepository(private val context: Context) {
 
     suspend fun insertWorkout(workout: WorkoutTelemetry): Boolean {
         val client = healthConnectClient ?: return false
-        val recordId = if (workout.id.isNotBlank()) workout.id else "workout_${workout.startTime.epochSecond}"
 
-        // Deduplication check: verify if workout with identical id or time already exists
+        // Deduplication check: verify if workout with identical time already exists
         val existing = client.readRecords(
             ReadRecordsRequest(
                 recordType = ExerciseSessionRecord::class,
@@ -137,8 +132,7 @@ class HealthConnectRepository(private val context: Context) {
         )
 
         val isDuplicate = existing.records.any {
-            it.metadata.clientRecordId == recordId ||
-                    (it.startTime == workout.startTime && it.endTime == workout.endTime)
+            it.startTime == workout.startTime && it.endTime == workout.endTime
         }
 
         if (isDuplicate) {
@@ -151,12 +145,12 @@ class HealthConnectRepository(private val context: Context) {
             endTime = workout.endTime,
             endZoneOffset = null,
             exerciseType = ExerciseSessionRecord.EXERCISE_TYPE_RUNNING,
-            title = workout.title,
-            metadata = Metadata(clientRecordId = recordId)
+            title = workout.title
         )
         client.insertRecords(listOf(record))
         return true
     }
+
 
     suspend fun performFullSync(): SyncReport {
         val client = healthConnectClient

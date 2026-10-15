@@ -41,3 +41,12 @@ data class PlatformAccount(
     var accountIdentifier: String? = null,
     var authToken: String? = null
 )
+
+data class PairingSyncResult(
+    val pairingId: String,
+    val isSuccess: Boolean,
+    val summary: String,
+    val recordsTransferred: Int,
+    val errorMessage: String? = null
+)
+
