@@ -7,8 +7,10 @@ import androidx.health.connect.client.records.ExerciseSessionRecord
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.StepsRecord
+import androidx.health.connect.client.records.WeightRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
+import androidx.health.connect.client.units.Mass
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -30,7 +32,9 @@ class HealthConnectRepository(private val context: Context) {
         HealthPermission.getReadPermission(SleepSessionRecord::class),
         HealthPermission.getWritePermission(SleepSessionRecord::class),
         HealthPermission.getReadPermission(ExerciseSessionRecord::class),
-        HealthPermission.getWritePermission(ExerciseSessionRecord::class)
+        HealthPermission.getWritePermission(ExerciseSessionRecord::class),
+        HealthPermission.getReadPermission(WeightRecord::class),
+        HealthPermission.getWritePermission(WeightRecord::class)
     )
 
     fun isSupported(): Boolean {
@@ -87,7 +91,6 @@ class HealthConnectRepository(private val context: Context) {
     suspend fun insertSteps(steps: StepTelemetry): Boolean {
         val client = healthConnectClient ?: return false
 
-        // Deduplication check: check if record with same time range already exists in Health Connect
         val existing = client.readRecords(
             ReadRecordsRequest(
                 recordType = StepsRecord::class,
@@ -120,7 +123,6 @@ class HealthConnectRepository(private val context: Context) {
     suspend fun insertWorkout(workout: WorkoutTelemetry): Boolean {
         val client = healthConnectClient ?: return false
 
-        // Deduplication check: verify if workout with identical time already exists
         val existing = client.readRecords(
             ReadRecordsRequest(
                 recordType = ExerciseSessionRecord::class,
@@ -139,18 +141,113 @@ class HealthConnectRepository(private val context: Context) {
             return false
         }
 
+        val exerciseTypeConstant = when {
+            workout.exerciseType.contains("run", ignoreCase = true) -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING
+            workout.exerciseType.contains("bike", ignoreCase = true) || workout.exerciseType.contains("cycle", ignoreCase = true) -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
+            workout.exerciseType.contains("walk", ignoreCase = true) -> ExerciseSessionRecord.EXERCISE_TYPE_WALKING
+            workout.exerciseType.contains("swim", ignoreCase = true) -> ExerciseSessionRecord.EXERCISE_TYPE_SWIMMING_POOL
+            workout.exerciseType.contains("hike", ignoreCase = true) -> ExerciseSessionRecord.EXERCISE_TYPE_HIKING
+            else -> ExerciseSessionRecord.EXERCISE_TYPE_OTHER_WORKOUT
+        }
+
         val record = ExerciseSessionRecord(
             startTime = workout.startTime,
             startZoneOffset = null,
             endTime = workout.endTime,
             endZoneOffset = null,
-            exerciseType = ExerciseSessionRecord.EXERCISE_TYPE_RUNNING,
+            exerciseType = exerciseTypeConstant,
             title = workout.title
         )
         client.insertRecords(listOf(record))
         return true
     }
 
+    suspend fun insertHeartRate(hr: HeartRateTelemetry): Boolean {
+        val client = healthConnectClient ?: return false
+
+        val existing = client.readRecords(
+            ReadRecordsRequest(
+                recordType = HeartRateRecord::class,
+                timeRangeFilter = TimeRangeFilter.between(
+                    hr.time.minusSeconds(5),
+                    hr.time.plusSeconds(5)
+                )
+            )
+        )
+
+        if (existing.records.isNotEmpty()) {
+            return false
+        }
+
+        val sample = HeartRateRecord.Sample(
+            time = hr.time,
+            beatsPerMinute = hr.bpm
+        )
+
+        val record = HeartRateRecord(
+            startTime = hr.time.minusSeconds(1),
+            startZoneOffset = null,
+            endTime = hr.time.plusSeconds(1),
+            endZoneOffset = null,
+            samples = listOf(sample)
+        )
+        client.insertRecords(listOf(record))
+        return true
+    }
+
+    suspend fun insertSleep(sleep: SleepTelemetry): Boolean {
+        val client = healthConnectClient ?: return false
+
+        val existing = client.readRecords(
+            ReadRecordsRequest(
+                recordType = SleepSessionRecord::class,
+                timeRangeFilter = TimeRangeFilter.between(
+                    sleep.startTime.minusSeconds(1),
+                    sleep.endTime.plusSeconds(1)
+                )
+            )
+        )
+
+        if (existing.records.isNotEmpty()) {
+            return false
+        }
+
+        val record = SleepSessionRecord(
+            startTime = sleep.startTime,
+            startZoneOffset = null,
+            endTime = sleep.endTime,
+            endZoneOffset = null,
+            title = sleep.title
+        )
+        client.insertRecords(listOf(record))
+        return true
+    }
+
+    suspend fun insertWeight(weight: WeightTelemetry): Boolean {
+        val client = healthConnectClient ?: return false
+
+        val existing = client.readRecords(
+            ReadRecordsRequest(
+                recordType = WeightRecord::class,
+                timeRangeFilter = TimeRangeFilter.between(
+                    weight.time.minusSeconds(60),
+                    weight.time.plusSeconds(60)
+                )
+            )
+        )
+
+        if (existing.records.isNotEmpty()) {
+            return false
+        }
+
+        val record = WeightRecord(
+            weight = Mass.kilograms(weight.weightKg),
+            time = weight.time,
+            zoneOffset = null
+        )
+        client.insertRecords(listOf(record))
+        return true
+    }
 
     suspend fun performFullSync(): SyncReport {
         val client = healthConnectClient

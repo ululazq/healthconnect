@@ -14,7 +14,9 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class ActivityFeedAdapter : ListAdapter<WorkoutTelemetry, ActivityFeedAdapter.ActivityViewHolder>(DiffCallback) {
+class ActivityFeedAdapter(
+    var onActivityClick: ((WorkoutTelemetry) -> Unit)? = null
+) : ListAdapter<WorkoutTelemetry, ActivityFeedAdapter.ActivityViewHolder>(DiffCallback) {
 
     private val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a", Locale.US)
     private val dateFormatter = DateTimeFormatter.ofPattern("MMM dd", Locale.US)
@@ -37,6 +39,10 @@ class ActivityFeedAdapter : ListAdapter<WorkoutTelemetry, ActivityFeedAdapter.Ac
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(workout: WorkoutTelemetry) {
+            binding.root.setOnClickListener {
+                onActivityClick?.invoke(workout)
+            }
+
             binding.tvWorkoutTitle.text = workout.title
             binding.tvSourceBadge.text = workout.source
 
